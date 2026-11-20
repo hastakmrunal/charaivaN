@@ -1,0 +1,949 @@
+# CHARAIVA — COMPLETE MASTER UPGRADE, DISCOVER ENGINE & FULL APP QUALITY ASSURANCE
+
+## MAIN OBJECTIVE
+
+Upgrade the existing Charaiva travel and discovery application into a highly accurate, responsive, multilingual AI-powered platform that helps users explore and understand virtually anything around them.
+
+Charaiva should help users discover not only tourist attractions, but also monuments, sculptures, historical artifacts, buildings, architectural details, religious and cultural objects, artworks, natural features, and ordinary objects.
+
+The application must answer three important questions:
+
+1. **What is this?**
+2. **What is its story, meaning, and significance?**
+3. **Can you explain every interesting detail in language that I can easily understand?**
+
+Implement all improvements directly within the existing Charaiva application. Preserve its identity, current design language, existing features, settings, integrations, and user data.
+
+**IMPORTANT PROJECT PROTECTION RULES:**
+
+- Do not create a new application from scratch.
+- Do not remove existing working features.
+- Do not modify the already-published version.
+- Apply changes only to the intended development copy.
+- Before modifying code, create a recoverable checkpoint or version-control commit.
+- Do not overwrite or delete existing user data.
+- Reuse existing components, services, databases, and AI integrations wherever possible.
+- Do not claim a feature is working unless it has been implemented and tested.
+- Do not use fake, hardcoded results to make unfinished features appear functional.
+
+---
+
+# PART 1 — NEW UNIVERSAL DISCOVER TAB
+
+## 1.1 Add Discover to Navigation
+
+Introduce a new tab named:
+
+**Discover**
+
+Position it beside the existing Photo Guide in the application's navigation.
+
+The feature must match the current Charaiva design system, including layout, typography, colours, animations, icons, themes, and responsive behaviour.
+
+Do not overcrowd the mobile navigation. If required, use a clearly labelled More or Explore section while keeping Discover easy to access.
+
+Users must be able to open Discover from the main navigation and return to their previous screen without losing progress.
+
+## 1.2 Universal Search
+
+The Discover feature must allow users to search for any identifiable subject through:
+
+- Exact name
+- Partial name
+- Description
+- Visual clue
+- Historical clue
+- Common nickname
+- Alternative historical name
+- Local-language name
+- Voice input
+- Misspelled names
+- Natural-language questions
+
+Examples:
+
+"A dancing Shiva sculpture"
+
+"A temple where pillars make musical sounds"
+
+"A monument built by Shah Jahan"
+
+"An ancient stone carving showing a battle"
+
+"A building with four minarets in Hyderabad"
+
+"A pillar with lions on top"
+
+"What is the sculpture with many hands?"
+
+"An old instrument that tells time using sunlight"
+
+The system should interpret the user's intent rather than requiring an exact database match.
+
+Search must not be restricted to a small predefined list of tourist attractions.
+
+Users must be able to search worldwide without enabling GPS.
+
+---
+
+# PART 2 — RELATED SEARCH RESULTS BEFORE EXPLANATION
+
+This is a mandatory interaction.
+
+## 2.1 Search Results Flow
+
+Whenever a user submits a search term or clue:
+
+**Step 1:** Interpret the input.
+
+**Step 2:** Search for relevant candidate matches.
+
+**Step 3:** Display a list of possible matches, ranked by relevance.
+
+**Step 4:** Let the user select the correct result.
+
+**Step 5:** Open the complete explanation of the selected subject.
+
+**Step 6:** Allow additional questions and exploration.
+
+Do not automatically assume one interpretation when the clue could refer to multiple subjects.
+
+## 2.2 Search Result Cards
+
+Each result card should show:
+
+- Subject name
+- Correct photograph, when available
+- Category
+- Short description
+- Location or origin, when relevant
+- Alternative name, if useful
+- Selection action
+
+Show the best matches first and provide a Load More option.
+
+Use helpful labels such as:
+
+- Monument
+- Sculpture
+- Temple
+- Artwork
+- Museum Object
+- Natural Feature
+- Architectural Detail
+- Historical Artifact
+
+A result must not be labelled verified simply because an AI model considers it likely.
+
+## 2.3 Example
+
+User enters:
+
+"A dancing Shiva sculpture"
+
+Possible results:
+
+1. Nataraja — Dancing Shiva
+2. Shiva as Natesa — Alternative artistic representations
+3. Chidambaram Nataraja Temple
+4. Other related Shiva sculptures and artworks
+
+The user selects one result.
+
+Charaiva then explains that particular result in detail.
+
+For ambiguous subjects, identify the exact museum object or artwork edition when possible. Do not merge information from different sculptures into one falsely precise description.
+
+## 2.4 Search Behaviour
+
+Support:
+
+- Debounced suggestions where appropriate
+- Full search on submission
+- Spelling tolerance
+- Multilingual queries
+- Alternative names
+- Search-history suggestions
+- Related searches
+- Pagination or Load More
+- Empty-result handling
+- Ambiguous-result handling
+- Retry after failure
+
+Suggestions must be based on actual indexed records or search responses rather than invented autocomplete items presented as facts.
+
+---
+
+# PART 3 — COMPLETE EXPLANATION AFTER RESULT SELECTION
+
+After the user selects a subject, open a full detail screen using the same explanation standards and settings as other Charaiva search experiences.
+
+## 3.1 Explanation Sections
+
+Show applicable information about:
+
+### Basic Identification
+- Name
+- Other names
+- Category
+- Description
+- Exact location or origin, where known
+- Date or historical period
+- Creator, dynasty, or associated civilisation
+
+### History
+- When it was created
+- Who created or commissioned it
+- Why it was made
+- Original purpose
+- Important historical events
+- Changes across time
+- Restoration and conservation
+
+### Architecture and Construction
+- Architectural style
+- Materials
+- Dimensions when verified
+- Construction methods
+- Structural design
+- Engineering innovations
+- Artistic techniques
+
+### Sculpture and Fine Details
+- Posture
+- Hand gestures
+- Facial expressions
+- Clothing and ornaments
+- Symbols
+- Objects held by figures
+- Animals and decorative elements
+- Carved scenes
+- Inscriptions
+- Patterns
+- Artistic techniques
+- Religious or cultural interpretations
+
+### Meaning and Significance
+- Cultural significance
+- Historical importance
+- Religious importance, when relevant
+- Symbolism
+- Local traditions
+- Influence on later art or architecture
+
+### Interesting Facts
+- Little-known verified details
+- Unique characteristics
+- Historical discoveries
+- Conservation findings
+- Popular legends, clearly identified as legends
+
+### Visitor Information
+For visitable places only:
+- Map location
+- Directions
+- Accessibility details, where available
+- Visiting hours, if verified
+- Entry fees, if verified
+- Official website or visitor information
+- Nearby related attractions
+
+Only display relevant sections. An ordinary object should not be forced into the same visitor-information template as a monument.
+
+---
+
+# PART 4 — MINUTE DETAIL EXPLORER
+
+Create a special feature called:
+
+**Detail by Detail**
+
+This should be available within the selected subject's detail screen.
+
+The user should be able to explore the smallest meaningful components of a sculpture, monument, artwork, or historical object.
+
+For example, when exploring a Nataraja sculpture:
+
+- Why is Shiva dancing?
+- What does the surrounding ring represent?
+- What is the significance of the flame?
+- What does the drum symbolise?
+- What is beneath Shiva's foot?
+- What do the hand gestures mean?
+- What materials were used?
+- How was the sculpture made?
+
+Answers must distinguish broadly accepted interpretations from interpretations that vary across traditions or individual artworks.
+
+## 4.1 Select a Detail
+
+If image analysis supports it, allow users to select or tap a visible region of an image.
+
+Charaiva should:
+
+1. Identify the selected visual region.
+2. Explain what is visible.
+3. Identify the feature when evidence supports it.
+4. Explain its possible meaning.
+5. Provide relevant historical context.
+6. Offer follow-up questions.
+
+Do not pretend that image coordinates or object segmentation are supported unless the feature has been implemented.
+
+Provide a text-based alternative when region selection is unavailable.
+
+## 4.2 Ask About This Detail
+
+Add a button labelled:
+
+**Ask About This Detail**
+
+Users should be able to ask questions such as:
+
+"Why does this figure have four arms?"
+
+"What does the inscription say?"
+
+"Why is this part damaged?"
+
+"Why are these patterns repeated?"
+
+"Who created this carving?"
+
+For inscriptions, distinguish between confirmed reading, approximate transliteration, translation, and uncertain interpretation.
+
+Never invent inscription text.
+
+---
+
+# PART 5 — THREE EXPLANATION LEVELS
+
+Provide three explanation modes:
+
+### Quick Summary
+A short, simple overview for users who want an immediate answer.
+
+### Standard Explanation
+A balanced explanation covering identity, background, important details, and interesting facts.
+
+### Deep Dive
+A comprehensive explanation covering the subject's history, symbolism, construction, artistic details, controversies, preservation, and relevant sources.
+
+The modes must follow existing language, voice, and guide-personality preferences.
+
+Deep Dive should not simply repeat the short explanation with additional filler.
+
+It should provide genuinely useful depth supported by evidence.
+
+---
+
+# PART 6 — PHOTO GUIDE AND DISCOVER INTEGRATION
+
+Connect Discover with the existing Photo Guide.
+
+Users should be able to:
+
+- Search for something by name.
+- Identify something from a photograph.
+- Search for an object using a clue.
+- Compare a photograph with related search results.
+- Open a selected result in the complete explanation screen.
+- Return to the original search or photograph.
+- Ask questions about the selected object.
+
+Example:
+
+A visitor sees an unidentified sculpture.
+
+They can photograph it through Photo Guide or describe it through Discover.
+
+Charaiva shows possible matches.
+
+The visitor selects the most appropriate result.
+
+Charaiva explains its history, symbolism, construction, and individual details.
+
+Preserve any existing working Photo Guide functions.
+
+Do not create two inconsistent explanation engines.
+
+---
+
+# PART 7 — PHOTOGRAPH ACCURACY AND VERIFICATION
+
+Fix misleading, mismatched, or unrelated images throughout the application.
+
+This includes:
+
+- Explore
+- Attractions
+- Discover
+- Photo Guide
+- AI Guide
+- Related Places
+- Search Results
+- Detail Screens
+
+## 7.1 Image Validation
+
+For each image:
+
+1. Identify the exact subject being displayed.
+2. Prefer official or authoritative image sources.
+3. Check available captions, metadata, identifiers, and source context.
+4. Confirm that the photograph relates to the selected subject.
+5. Avoid unrelated stock images.
+6. Preserve attribution and licensing requirements.
+7. Clearly distinguish illustrations from photographs.
+
+When the identity cannot be verified, do not confidently present an unrelated image.
+
+Display an appropriate placeholder or verified alternative instead.
+
+## 7.2 Object-Specific Images
+
+When viewing sculptures, artworks, or museum objects, prefer images of the exact identified object rather than a generic example from the same artistic tradition.
+
+If the system only has an image of a similar object, label it clearly as an example rather than as the actual subject.
+
+## 7.3 Image Performance
+
+Implement:
+
+- Responsive image sizes
+- Lazy loading
+- Image caching
+- Progressive placeholders
+- Correct aspect ratios
+- Fallback on load failure
+- Prevention of layout shifts
+- Limits on unnecessary image downloads
+
+Do not sacrifice accuracy to improve loading speed.
+
+---
+
+# PART 8 — DATA ACCURACY AND SOURCE VERIFICATION
+
+Audit the existing knowledge and search pipeline.
+
+Check that information is not being presented as verified when it is merely generated by AI.
+
+## 8.1 Source Priority
+
+Prefer relevant, authoritative information from:
+
+- Archaeological Survey of India
+- UNESCO
+- Government tourism departments
+- Official monument and museum websites
+- Museum collection records
+- Academic publications
+- Authoritative heritage documentation
+
+Use sources appropriate to the country and subject.
+
+## 8.2 Verification Rules
+
+Verify available evidence for:
+
+- Historical dates
+- Names
+- Locations
+- Artists and dynasties
+- Sculptural identities
+- Architectural styles
+- Historical claims
+- Inscriptions
+- Materials
+- Dimensions
+- Entry fees
+- Opening hours
+
+Keep source dates where information can change.
+
+Provide citations or direct source links wherever practical.
+
+Do not invent references or fabricate certainty.
+
+When trustworthy evidence is insufficient, explain the uncertainty in simple language.
+
+Separate:
+
+**Established Fact — Traditional Interpretation — Possible Identification — Unknown**
+
+These categories must be understandable to ordinary users.
+
+## 8.3 AI Answer Quality
+
+AI-generated explanations must be:
+
+- Accurate
+- Relevant
+- Respectful
+- Engaging
+- Understandable
+- Non-repetitive
+- Properly structured
+- Free from invented specifics
+
+The system should not blindly convert guesses into factual statements.
+
+---
+
+# PART 9 — LANGUAGE AND TRANSLATION CONSISTENCY
+
+Fix the issue where Explore place details do not consistently follow the selected application language.
+
+Apply the selected language to all relevant features:
+
+- Discover
+- Search suggestions
+- Search results
+- Explore
+- Attractions
+- Photo Guide
+- AI Guide
+- Detail by Detail
+- Deep Dive
+- Voice narration
+- Related Discoveries
+- Navigation labels
+- Loading and error messages
+
+Reuse existing translation infrastructure.
+
+Do not hardcode English text inside newly created screens.
+
+Preserve proper names, specialist terms, and important historical terminology when translation would reduce accuracy.
+
+Explain unfamiliar terms in the user's chosen language.
+
+Maintain language settings when switching pages or reopening the app.
+
+Test representative languages, including English, Hindi, and Marathi, as well as the other existing supported languages.
+
+Do not claim a language is fully supported unless its key screens and information flow have been verified.
+
+---
+
+# PART 10 — VOICE AND ACCESSIBILITY
+
+Reuse current settings for:
+
+- Voice language
+- Narration speed
+- Available voice options
+- Speech pitch
+- Guide personality
+- Text-only mode
+- Audio-only mode, where supported
+- Combined text and narration
+
+Voice narration should read the selected explanation in the correct language.
+
+Avoid reading source URLs or interface labels unnecessarily.
+
+Allow narration to be paused, resumed, or stopped where the existing system supports those actions.
+
+Stop or manage playback correctly when users navigate to another subject.
+
+Make the UI accessible through:
+
+- Clear button labels
+- Sufficient text contrast
+- Keyboard accessibility
+- Screen-reader descriptions
+- Large touch targets
+- Readable text
+- Visible loading and error states
+
+---
+
+# PART 11 — EXPLORE AND ATTRACTIONS IMPROVEMENTS
+
+## 11.1 Inline More Details
+
+On Explore's existing place-listing screen, add or preserve a **More Details** action on each place card.
+
+Users should be able to expand a small information preview directly within the listing, without navigating to another screen.
+
+The expanded card should provide:
+
+- Short description
+- Historical significance
+- Important highlights
+- Useful visitor information
+- Quick access to Deep Dive
+
+The preview must inherit the selected language and existing display settings.
+
+## 11.2 Attraction Loading Speed
+
+Investigate why the Attractions screen takes too long to display results.
+
+Check:
+
+- API response times
+- Sequential requests
+- Duplicate calls
+- Large image downloads
+- Unnecessary AI generation
+- Geolocation waits
+- Excessive database queries
+- Rendering bottlenecks
+
+Load useful basic attraction information first.
+
+Fetch expensive descriptions and additional media on demand.
+
+Use pagination, request deduplication, caching, and progressive loading where appropriate.
+
+Avoid blocking the entire screen while waiting for optional information.
+
+## 11.3 Place Data Integrity
+
+Confirm that:
+
+- Names match locations.
+- Descriptions refer to the correct attractions.
+- Photographs match places.
+- Coordinates are accurate.
+- Map markers are correctly positioned.
+- Duplicate entries are handled.
+- Missing data is not replaced by invented information.
+
+---
+
+# PART 12 — SPEED AND PERFORMANCE AUDIT
+
+Perform a complete performance investigation of Charaiva.
+
+Measure:
+
+- Initial app loading
+- Home-screen rendering
+- Explore loading
+- Attraction search
+- Discover query response
+- Search result rendering
+- Detailed explanation generation
+- Photo Guide processing
+- AI Guide response time
+- Image rendering
+- Language switching
+- Navigation transitions
+- Journal loading
+
+Use actual measurements where testing tools are available.
+
+Do not invent speed scores or timings.
+
+## 12.1 Optimisation
+
+Implement suitable improvements:
+
+- Lazy loading
+- Code splitting
+- Debounced input
+- Cancellable requests
+- Query caching
+- Image optimisation
+- Request deduplication
+- Progressive rendering
+- Server-side timeouts
+- Retry with appropriate backoff
+- Controlled AI concurrency
+- Removal of unnecessary rerenders
+
+Maintain responsiveness under slow network conditions.
+
+## 12.2 AI Cost Management
+
+Avoid generating a complete Deep Dive for every search candidate.
+
+Use a staged process:
+
+1. Retrieve candidate matches.
+2. Display concise information.
+3. Wait for user selection.
+4. Generate the selected explanation.
+5. Fetch additional detail only when requested.
+
+Cache reusable verified information while respecting freshness requirements.
+
+Preserve the existing AI provider integration and credentials.
+
+Do not expose API keys in frontend code.
+
+---
+
+# PART 13 — NAVIGATION AND USER FLOW
+
+Review navigation throughout the app.
+
+Users should always have a predictable way to go back.
+
+In particular:
+
+- Discover → Results → Details → Back to Results
+- Discover → Photo Guide → Back to Discover
+- Explore → Place Details → Back to Explore
+- Attractions → Details → Back to Attractions
+- AI Guide → Previous Screen
+
+Preserve:
+
+- Search input
+- Selected result
+- Scroll position
+- Applied filters
+- Language setting
+- Relevant session state
+
+The application's published home screen must remain the canonical home screen.
+
+Do not accidentally route users to an older, duplicate, or experimental home screen.
+
+Handle browser Back, mobile Back, and in-app navigation consistently.
+
+Avoid infinite redirects and broken navigation history.
+
+Do not reintroduce previously fixed issues.
+
+---
+
+# PART 14 — SETTINGS SYNCHRONISATION
+
+All new components must use Charaiva's existing settings.
+
+Do not create a second independent preferences system.
+
+Apply the correct current values for:
+
+- Language
+- Theme
+- Voice
+- Narration preferences
+- Guide personality
+- Location permissions
+- Accessibility preferences
+- Relevant user profile options
+
+If a user changes a setting, the change should affect applicable screens without unnecessary re-entry.
+
+Respect guest access and the existing authentication model.
+
+Do not request unnecessary permissions.
+
+---
+
+# PART 15 — RELATED DISCOVERIES
+
+At the end of every detailed explanation, display a **Related Discoveries** section.
+
+Examples:
+
+A user exploring Nataraja might see:
+
+- Related representations of Shiva
+- Chola bronze craftsmanship
+- Relevant temples
+- Museum collections
+- South Indian sculptural traditions
+
+A user exploring a fort might see:
+
+- Nearby forts
+- Historical rulers
+- Related architectural styles
+- Significant battles
+- Connected heritage sites
+
+Recommendations must have a meaningful relationship to the original subject.
+
+Allow users to select a related result and open its explanation.
+
+Preserve a clear path back to the original subject.
+
+---
+
+# PART 16 — FULL APPLICATION TESTING
+
+Before considering the upgrade complete, audit all existing and newly added functions.
+
+## 16.1 UI Testing
+
+Check:
+
+- Home screen
+- Explore
+- Attractions
+- Photo Guide
+- Discover
+- AI Guide
+- Maps
+- Travel Journal
+- Settings
+- Profile and login, if enabled
+- Navigation
+- Responsive layout
+- Mobile screens
+- Desktop screens
+- Light and dark themes
+
+Check text alignment, button states, spacing, icon consistency, image rendering, scrolling, and accessibility.
+
+## 16.2 Functional Testing
+
+Verify that every visible interactive control performs its expected action.
+
+Test:
+
+- Search by exact name
+- Search by partial name
+- Search by vague clue
+- Search in different languages
+- Voice-based search
+- Result selection
+- Back navigation
+- Detail screens
+- Related discoveries
+- Deep Dive
+- Detail by Detail
+- Photo Guide
+- Journal saving
+- Narration
+- Map navigation
+- Settings persistence
+
+## 16.3 Historical Accuracy Testing
+
+Use a representative set of subjects including:
+
+- Taj Mahal
+- Ajanta Caves
+- Ellora Caves
+- Konark Sun Temple
+- Nataraja sculpture
+- Ashoka Lion Capital
+- Charminar
+- A historical inscription
+- An unidentified sculpture
+- A common non-historical object
+
+Verify factual claims against trustworthy references.
+
+Do not use AI responses themselves as verification sources.
+
+## 16.4 Failure Testing
+
+Test situations involving:
+
+- No internet
+- Very slow internet
+- AI provider unavailable
+- API quota exhaustion
+- Image loading failure
+- GPS denied
+- No search results
+- Ambiguous search results
+- Unsupported voice input
+- Missing historical evidence
+- Expired sessions
+- Rapid navigation
+- Repeated searches
+- Multiple simultaneous requests
+
+Provide graceful errors and practical recovery actions.
+
+## 16.5 Security Testing
+
+Review:
+
+- API-key exposure
+- Authentication requirements
+- Data access permissions
+- User-upload handling
+- Search-input validation
+- Injection resistance
+- AI prompt-injection safeguards
+- Privacy of saved searches and Journal content
+- Server-side restrictions
+- Unnecessary collection of personal data
+
+---
+
+# PART 17 — QUALITY AND ACCEPTANCE REQUIREMENTS
+
+The work is complete only when the following conditions are met:
+
+1. Discover appears in the existing app navigation.
+2. Users can search by name, clue, and supported voice input.
+3. Search displays relevant candidate matches.
+4. Users can select one result.
+5. A detailed explanation opens for the selected subject.
+6. Detailed sculpture and monument information is understandable.
+7. Detail by Detail works in its implemented form.
+8. Relevant photographs are accurately attributed.
+9. The selected language is respected throughout the flow.
+10. Existing settings remain synchronised.
+11. Explore's inline More Details works.
+12. Performance improvements are measured rather than assumed.
+13. Navigation preserves user context.
+14. Existing features are not broken.
+15. AI answers distinguish facts from uncertainty.
+16. Relevant verification sources are provided.
+17. Empty and error states work correctly.
+18. Mobile and desktop layouts are tested.
+19. The existing published version remains untouched.
+20. All incomplete features are clearly reported.
+
+---
+
+# PART 18 — FINAL VERIFICATION REPORT
+
+After implementation, generate a transparent quality-assurance report containing:
+
+### A. Implemented Features
+Describe the features actually completed and the relevant components or files changed.
+
+### B. Test Results
+Show each tested feature with PASS, FAIL, or NOT TESTED status.
+
+### C. Accuracy Verification
+Provide sample subjects, factual claims checked, the independent sources used, and any discrepancies.
+
+### D. Performance
+Report actual measured loading and response times under stated conditions.
+
+### E. Remaining Problems
+List unresolved defects, incomplete integrations, or limitations.
+
+### F. Recommended Improvements
+Prioritise remaining improvements by impact on usability, accuracy, speed, reliability, and cost.
+
+### G. Regression Confirmation
+Identify which existing screens and features were retested after changes.
+
+Never mark an item as PASS based solely on code inspection, a planned implementation, or an AI-generated claim.
+
+If browser testing, API access, credentials, or external services are unavailable, clearly state the testing limitation.
+
+---
+
+# FINAL IMPLEMENTATION INSTRUCTION
+
+First inspect the existing Charaiva project and identify its actual architecture, current features, integrations, navigation structure, settings system, and data sources.
+
+Then prepare an implementation plan that preserves the current working application.
+
+Implement the Discover system and other requested improvements in manageable, verifiable stages within the development copy.
+
+Run appropriate build checks, automated tests, functional tests, and browser-based tests wherever supported.
+
+Repair defects discovered during testing without introducing unrelated features.
+
+Do not declare completion until the available checks have been performed and all unresolved issues have been clearly documented.
+
+**The final goal is to make Charaiva a dependable AI travel and knowledge companion that can identify a place or object from a name, clue, or photograph, show users relevant matches, and explain the selected subject from its basic identity to its smallest meaningful details — accurately, clearly, and in the user's preferred language.**

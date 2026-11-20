@@ -1,0 +1,513 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Default-Deny Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Reusable Security Primitives
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId && request.auth.token.email_verified == true;
+    }
+
+    // 3. Entity Validation Helpers
+    function isValidUserProfile(data, userId) {
+      return data.keys().hasAll(['uid', 'name', 'email', 'preferredLanguage', 'travelerType', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'name', 'email', 'preferredLanguage', 'travelerType', 'visitedCount', 'createdAt', 'updatedAt'])
+        && data.uid is string
+        && data.uid.size() > 0
+        && data.uid.size() <= 128
+        && data.uid == request.auth.uid
+        && data.uid == userId
+        && data.name is string
+        && data.name.size() >= 1
+        && data.name.size() <= 80
+        && data.email is string
+        && data.email.size() >= 3
+        && data.email.size() <= 160
+        && data.preferredLanguage is string
+        && data.preferredLanguage.size() >= 2
+        && data.preferredLanguage.size() <= 16
+        && data.travelerType in ['heritage_enthusiast', 'foodie', 'nature_explorer', 'casual_tourist', 'photographer']
+        && (!('visitedCount' in data) || (data.visitedCount is int && data.visitedCount >= 0 && data.visitedCount <= 100000))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidTopicsMap(topics) {
+      return topics is map
+        && topics.keys().hasAll(['historical', 'geographical', 'political', 'architectural', 'culturalMythology', 'culinary', 'economic', 'ecological', 'photography', 'mysteries'])
+        && topics.keys().hasOnly(['historical', 'geographical', 'political', 'architectural', 'culturalMythology', 'culinary', 'economic', 'ecological', 'photography', 'mysteries'])
+        && topics.historical is bool
+        && topics.geographical is bool
+        && topics.political is bool
+        && topics.architectural is bool
+        && topics.culturalMythology is bool
+        && topics.culinary is bool
+        && topics.economic is bool
+        && topics.ecological is bool
+        && topics.photography is bool
+        && topics.mysteries is bool;
+    }
+
+    function isValidGuidePreferences(data, userId) {
+      return data.keys().hasAll([
+          'uid',
+          'outputMode',
+          'voiceGender',
+          'persona',
+          'voicePitch',
+          'speechRate',
+          'savePhotosToDeviceMemory',
+          'locationMode',
+          'theme',
+          'topics',
+          'hasSeenIntro',
+          'hasCompletedTour',
+          'hasCompletedLoginSetup',
+          'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'uid',
+          'outputMode',
+          'voiceGender',
+          'persona',
+          'voicePitch',
+          'speechRate',
+          'savePhotosToDeviceMemory',
+          'locationMode',
+          'manualCityName',
+          'manualStateName',
+          'manualStateCode',
+          'manualCountryName',
+          'manualCountryCode',
+          'manualPlaceId',
+          'manualLocationVerified',
+          'manualLatitude',
+          'manualLongitude',
+          'theme',
+          'topics',
+          'hasSeenIntro',
+          'hasCompletedTour',
+          'hasCompletedLoginSetup',
+          'updatedAt'
+        ])
+        && data.uid is string
+        && data.uid.size() > 0
+        && data.uid.size() <= 128
+        && data.uid == request.auth.uid
+        && data.uid == userId
+        && data.outputMode in ['speech', 'text', 'both']
+        && data.voiceGender in ['female', 'male']
+        && data.persona in ['warm_female', 'scholarly', 'adventurous', 'concise']
+        && (data.voicePitch is float || data.voicePitch is int)
+        && data.voicePitch >= 0.5
+        && data.voicePitch <= 2.0
+        && (data.speechRate is float || data.speechRate is int)
+        && data.speechRate >= 0.5
+        && data.speechRate <= 2.0
+        && data.savePhotosToDeviceMemory is bool
+        && data.locationMode in ['gps', 'manual']
+        && (!('manualCityName' in data) || (data.manualCityName is string && data.manualCityName.size() <= 100))
+        && (!('manualStateName' in data) || (data.manualStateName is string && data.manualStateName.size() <= 100))
+        && (!('manualStateCode' in data) || (data.manualStateCode is string && data.manualStateCode.size() <= 32))
+        && (!('manualCountryName' in data) || (data.manualCountryName is string && data.manualCountryName.size() <= 100))
+        && (!('manualCountryCode' in data) || (data.manualCountryCode is string && data.manualCountryCode.size() <= 8))
+        && (!('manualPlaceId' in data) || (data.manualPlaceId is string && data.manualPlaceId.size() <= 160))
+        && (!('manualLocationVerified' in data) || data.manualLocationVerified is bool)
+        && (!('manualLatitude' in data) || ((data.manualLatitude is float || data.manualLatitude is int) && data.manualLatitude >= -90 && data.manualLatitude <= 90))
+        && (!('manualLongitude' in data) || ((data.manualLongitude is float || data.manualLongitude is int) && data.manualLongitude >= -180 && data.manualLongitude <= 180))
+        && data.theme in ['celestial', 'sunset', 'emerald', 'daylight']
+        && isValidTopicsMap(data.topics)
+        && data.hasSeenIntro is bool
+        && data.hasCompletedTour is bool
+        && data.hasCompletedLoginSetup is bool
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidJournalEntry(data, userId, journalId) {
+      return data.keys().hasAll([
+          'journalId',
+          'userId',
+          'placeId',
+          'placeName',
+          'city',
+          'country',
+          'locationName',
+          'category',
+          'visitDate',
+          'notes',
+          'guideSummary',
+          'visitedConfirmed',
+          'createdAt',
+          'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'journalId',
+          'userId',
+          'placeId',
+          'placeName',
+          'city',
+          'country',
+          'locationName',
+          'category',
+          'visitDate',
+          'notes',
+          'guideSummary',
+          'narration',
+          'keyFacts',
+          'tags',
+          'language',
+          'imageUrl',
+          'photoDataUrl',
+          'visitedConfirmed',
+          'createdAt',
+          'updatedAt'
+        ])
+        && data.journalId is string
+        && isValidId(data.journalId)
+        && data.journalId == journalId
+        && data.userId is string
+        && isValidId(data.userId)
+        && data.userId == request.auth.uid
+        && data.userId == userId
+        && data.placeId is string
+        && data.placeId.size() <= 160
+        && data.placeName is string
+        && data.placeName.size() >= 1
+        && data.placeName.size() <= 160
+        && data.city is string
+        && data.city.size() <= 100
+        && data.country is string
+        && data.country.size() <= 100
+        && data.locationName is string
+        && data.locationName.size() <= 200
+        && data.category in ['monument', 'temple', 'fort', 'museum', 'landscape', 'food', 'plant', 'object', 'building', 'animal']
+        && data.visitDate is string
+        && data.visitDate.size() >= 8
+        && data.visitDate.size() <= 20
+        && data.visitDate.matches('^\\d{4}-\\d{2}-\\d{2}$')
+        && data.notes is string
+        && data.notes.size() <= 2000
+        && data.guideSummary is string
+        && data.guideSummary.size() <= 1500
+        && (!('narration' in data) || (data.narration is string && data.narration.size() <= 6000))
+        && (!('language' in data) || (data.language is string && data.language.size() <= 60))
+        && (!('imageUrl' in data) || (data.imageUrl is string && data.imageUrl.size() <= 600))
+        && (!('photoDataUrl' in data) || (data.photoDataUrl is string && data.photoDataUrl.size() <= 100000))
+        && (!('keyFacts' in data) || (data.keyFacts is list && data.keyFacts.size() <= 12 && (data.keyFacts.size() == 0 || data.keyFacts[0] is string)))
+        && (!('tags' in data) || (data.tags is list && data.tags.size() <= 12 && (data.tags.size() == 0 || data.tags[0] is string)))
+        && data.visitedConfirmed is bool
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidAiChatConversation(data, userId, conversationId) {
+      return data.keys().hasAll([
+          'conversationId',
+          'userId',
+          'title',
+          'messageCount',
+          'createdAt',
+          'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'conversationId',
+          'userId',
+          'title',
+          'rollingSummary',
+          'lastMessagePreview',
+          'messageCount',
+          'languageCode',
+          'topicPlaceName',
+          'topicLocationName',
+          'topicSummary',
+          'topicHistoricalContext',
+          'topicArchitecturalDetails',
+          'topicCulturalSignificance',
+          'topicLandmarkId',
+          'createdAt',
+          'updatedAt'
+        ])
+        && data.conversationId is string
+        && isValidId(data.conversationId)
+        && data.conversationId == conversationId
+        && data.userId is string
+        && isValidId(data.userId)
+        && data.userId == request.auth.uid
+        && data.userId == userId
+        && data.title is string
+        && data.title.size() >= 1
+        && data.title.size() <= 160
+        && data.messageCount is int
+        && data.messageCount >= 0
+        && data.messageCount <= 5000
+        && (!('rollingSummary' in data) || (data.rollingSummary is string && data.rollingSummary.size() <= 2500))
+        && (!('lastMessagePreview' in data) || (data.lastMessagePreview is string && data.lastMessagePreview.size() <= 300))
+        && (!('languageCode' in data) || (data.languageCode is string && data.languageCode.size() <= 16))
+        && (!('topicPlaceName' in data) || (data.topicPlaceName is string && data.topicPlaceName.size() <= 160))
+        && (!('topicLocationName' in data) || (data.topicLocationName is string && data.topicLocationName.size() <= 200))
+        && (!('topicSummary' in data) || (data.topicSummary is string && data.topicSummary.size() <= 1500))
+        && (!('topicHistoricalContext' in data) || (data.topicHistoricalContext is string && data.topicHistoricalContext.size() <= 1500))
+        && (!('topicArchitecturalDetails' in data) || (data.topicArchitecturalDetails is string && data.topicArchitecturalDetails.size() <= 1500))
+        && (!('topicCulturalSignificance' in data) || (data.topicCulturalSignificance is string && data.topicCulturalSignificance.size() <= 1500))
+        && (!('topicLandmarkId' in data) || (data.topicLandmarkId is string && data.topicLandmarkId.size() <= 160))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidAiChatMessage(data, userId, conversationId, messageId) {
+      return data.keys().hasAll([
+          'messageId',
+          'conversationId',
+          'userId',
+          'sender',
+          'text',
+          'displayTimestamp',
+          'clientCreatedAtMs',
+          'createdAt'
+        ])
+        && data.keys().hasOnly([
+          'messageId',
+          'conversationId',
+          'userId',
+          'sender',
+          'text',
+          'displayTimestamp',
+          'clientCreatedAtMs',
+          'status',
+          'createdAt'
+        ])
+        && data.messageId is string
+        && isValidId(data.messageId)
+        && data.messageId == messageId
+        && data.conversationId is string
+        && isValidId(data.conversationId)
+        && data.conversationId == conversationId
+        && data.userId is string
+        && isValidId(data.userId)
+        && data.userId == request.auth.uid
+        && data.userId == userId
+        && data.sender in ['user', 'guide']
+        && data.text is string
+        && data.text.size() >= 1
+        && data.text.size() <= 12000
+        && data.displayTimestamp is string
+        && data.displayTimestamp.size() <= 40
+        && data.clientCreatedAtMs is int
+        && data.clientCreatedAtMs >= 0
+        && (!('status' in data) || data.status in ['done', 'error'])
+        && data.createdAt is timestamp;
+    }
+
+    // 4. Owner-Isolated User Subcollections
+    match /users/{userId}/private/profile {
+      allow get: if isValidId(userId) && isVerifiedOwner(userId);
+      allow list: if false;
+      allow create: if isValidId(userId)
+        && isVerifiedOwner(userId)
+        && isValidUserProfile(incoming(), userId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(userId)
+        && isVerifiedOwner(userId)
+        && isValidUserProfile(incoming(), userId)
+        && incoming().uid == existing().uid
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'name',
+          'email',
+          'preferredLanguage',
+          'travelerType',
+          'visitedCount',
+          'updatedAt'
+        ]);
+      allow delete: if isValidId(userId) && isVerifiedOwner(userId);
+    }
+
+    match /users/{userId}/preferences/guide {
+      allow get: if isValidId(userId) && isVerifiedOwner(userId);
+      allow list: if false;
+      allow create: if isValidId(userId)
+        && isVerifiedOwner(userId)
+        && isValidGuidePreferences(incoming(), userId)
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(userId)
+        && isVerifiedOwner(userId)
+        && isValidGuidePreferences(incoming(), userId)
+        && incoming().uid == existing().uid
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'outputMode',
+          'voiceGender',
+          'persona',
+          'voicePitch',
+          'speechRate',
+          'savePhotosToDeviceMemory',
+          'locationMode',
+          'manualCityName',
+          'manualStateName',
+          'manualStateCode',
+          'manualCountryName',
+          'manualCountryCode',
+          'manualPlaceId',
+          'manualLocationVerified',
+          'manualLatitude',
+          'manualLongitude',
+          'theme',
+          'topics',
+          'hasSeenIntro',
+          'hasCompletedTour',
+          'hasCompletedLoginSetup',
+          'updatedAt'
+        ]);
+      allow delete: if isValidId(userId) && isVerifiedOwner(userId);
+    }
+
+    match /users/{userId}/journalEntries/{journalId} {
+      allow get: if isValidId(userId)
+        && isValidId(journalId)
+        && isVerifiedOwner(userId)
+        && existing().userId == request.auth.uid;
+      allow list: if isValidId(userId)
+        && isVerifiedOwner(userId)
+        && resource.data.userId == request.auth.uid;
+      allow create: if isValidId(userId)
+        && isValidId(journalId)
+        && isVerifiedOwner(userId)
+        && isValidJournalEntry(incoming(), userId, journalId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(userId)
+        && isValidId(journalId)
+        && isVerifiedOwner(userId)
+        && isValidJournalEntry(incoming(), userId, journalId)
+        && incoming().journalId == existing().journalId
+        && incoming().userId == existing().userId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'placeId',
+          'placeName',
+          'city',
+          'country',
+          'locationName',
+          'category',
+          'visitDate',
+          'notes',
+          'guideSummary',
+          'narration',
+          'keyFacts',
+          'tags',
+          'language',
+          'imageUrl',
+          'photoDataUrl',
+          'visitedConfirmed',
+          'updatedAt'
+        ]);
+      allow delete: if isValidId(userId)
+        && isValidId(journalId)
+        && isVerifiedOwner(userId)
+        && existing().userId == request.auth.uid;
+    }
+
+    match /users/{userId}/aiConversations/{conversationId} {
+      allow get: if isValidId(userId)
+        && isValidId(conversationId)
+        && isVerifiedOwner(userId)
+        && existing().userId == request.auth.uid;
+      allow list: if isValidId(userId)
+        && isVerifiedOwner(userId)
+        && resource.data.userId == request.auth.uid;
+      allow create: if isValidId(userId)
+        && isValidId(conversationId)
+        && isVerifiedOwner(userId)
+        && isValidAiChatConversation(incoming(), userId, conversationId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isValidId(userId)
+        && isValidId(conversationId)
+        && isVerifiedOwner(userId)
+        && isValidAiChatConversation(incoming(), userId, conversationId)
+        && incoming().conversationId == existing().conversationId
+        && incoming().userId == existing().userId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'title',
+          'rollingSummary',
+          'lastMessagePreview',
+          'messageCount',
+          'languageCode',
+          'topicPlaceName',
+          'topicLocationName',
+          'topicSummary',
+          'topicHistoricalContext',
+          'topicArchitecturalDetails',
+          'topicCulturalSignificance',
+          'topicLandmarkId',
+          'updatedAt'
+        ]);
+      allow delete: if isValidId(userId)
+        && isValidId(conversationId)
+        && isVerifiedOwner(userId)
+        && existing().userId == request.auth.uid;
+
+      match /messages/{messageId} {
+        allow get: if isValidId(userId)
+          && isValidId(conversationId)
+          && isValidId(messageId)
+          && isVerifiedOwner(userId)
+          && existing().userId == request.auth.uid;
+        allow list: if isValidId(userId)
+          && isValidId(conversationId)
+          && isVerifiedOwner(userId)
+          && resource.data.userId == request.auth.uid;
+        allow create: if isValidId(userId)
+          && isValidId(conversationId)
+          && isValidId(messageId)
+          && isVerifiedOwner(userId)
+          && isValidAiChatMessage(incoming(), userId, conversationId, messageId)
+          && incoming().createdAt == request.time;
+        allow update: if isValidId(userId)
+          && isValidId(conversationId)
+          && isValidId(messageId)
+          && isVerifiedOwner(userId)
+          && isValidAiChatMessage(incoming(), userId, conversationId, messageId)
+          && incoming().messageId == existing().messageId
+          && incoming().conversationId == existing().conversationId
+          && incoming().userId == existing().userId
+          && incoming().sender == existing().sender
+          && incoming().createdAt == existing().createdAt
+          && incoming().diff(existing()).affectedKeys().hasOnly([
+            'text',
+            'displayTimestamp',
+            'status'
+          ]);
+        allow delete: if isValidId(userId)
+          && isValidId(conversationId)
+          && isValidId(messageId)
+          && isVerifiedOwner(userId)
+          && existing().userId == request.auth.uid;
+      }
+    }
+  }
+}

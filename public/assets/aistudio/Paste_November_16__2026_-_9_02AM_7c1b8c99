@@ -1,0 +1,846 @@
+# CHARAIVA — MASTER INCREMENTAL IMPROVEMENT & DATA ACCURACY PROMPT
+
+## PRIMARY INSTRUCTION: PRESERVE THE EXISTING APPLICATION
+
+You are working on the EXISTING Charaiva application. This is an enhancement and repair task, NOT a rebuild.
+
+**DO NOT redesign, replace, remove, rename, reset, or unnecessarily modify any existing feature, layout, screen, component, database, navigation flow, AI integration, setting, animation, or working functionality.**
+
+Study the current codebase, database structure, search system, AI services, navigation architecture, and user data before making changes.
+
+Implement ONLY the requirements specified below, while maintaining full backward compatibility.
+
+The existing published application's functionality is the baseline. Preserve existing user data, saved content, preferences, and working behavior.
+
+### Non-Negotiable Rules
+
+1. Make minimal, targeted changes to existing components.
+2. Reuse functioning services, APIs, databases, and UI components wherever possible.
+3. Do not replace existing functionality with mock data or simplified alternatives.
+4. Do not introduce fabricated information, misleading images, or invented locations.
+5. Do not change the visual identity, colors, typography, branding, or existing layouts.
+6. Do not break GPS, multilingual support, AI Guide, search, Explore, maps, sign-in, navigation, or other existing features.
+7. Preserve existing settings and user preferences.
+8. Do not remove existing Details Type options.
+9. Make improvements additive rather than destructive.
+10. Never claim a feature is tested or completed without verifying its actual behavior.
+
+---
+
+# PART 1 — REPAIR TOUR JOURNAL
+
+## Problem
+
+The Tour Journal is not functioning reliably for the user. Its saving, retrieval, and persistence behavior must be investigated and repaired.
+
+## Required Improvements
+
+The Tour Journal must correctly support its existing operations, including the available functionality for:
+
+- Recording visited places.
+- Saving trips and travel experiences.
+- Adding photographs and notes.
+- Viewing previously saved journal entries.
+- Editing existing entries.
+- Deleting entries when the user explicitly chooses.
+- Retrieving the correct entries for the current user.
+
+Inspect the existing data-saving mechanism and identify whether failures come from database writes, authentication, storage, missing permissions, state synchronization, or UI errors.
+
+### Data Persistence
+
+Journal entries must remain available after:
+
+- Reloading the page.
+- Closing and reopening the application.
+- Navigating between screens.
+- Signing out and signing back in to the same account.
+- Reopening the installed PWA.
+
+Use the application's existing authenticated storage architecture.
+
+Do not silently replace cloud persistence with temporary browser storage.
+
+Where guest mode exists, preserve its existing behavior and clearly distinguish device-only entries from account-synchronized entries.
+
+### Data Safety
+
+- Never delete or overwrite existing journal entries during migration.
+- Preserve photographs, timestamps, notes, and associated locations.
+- Do not expose a user's journal to another account.
+- Prevent duplicate entries caused by repeated taps.
+- Display meaningful errors when saving fails.
+- Show saving and saved states accurately.
+- Never claim an entry was saved until persistence succeeds.
+
+Retain the existing Tour Journal design and workflow.
+
+---
+
+# PART 2 — FIX INCORRECT LOCATION ASSUMPTIONS
+
+## Critical Problem
+
+When users upload an image or search for a place, monument, building, attraction, historical object, or other subject, Charaiva sometimes incorrectly assumes the result belongs to the user's current city.
+
+This must be corrected.
+
+**The user's current GPS location is context, NOT proof of where the searched or photographed subject exists.**
+
+### Required Search Architecture
+
+For every applicable search or image-identification request, evaluate two independent possibilities:
+
+**A. Local Search**
+
+Search for matching entities within the user's actual current geographic area, when location permission and usable coordinates are available.
+
+**B. Global Search**
+
+Search beyond the user's city, state, and country for possible matches.
+
+Do not artificially restrict global recognition to the user's current location.
+
+### Evidence Comparison
+
+Compare candidates using:
+
+- Exact and alternative name matches.
+- Visual landmarks and architectural characteristics.
+- Geographic evidence.
+- Verified place identifiers.
+- Reliable geographic coordinates.
+- Relevant historical and cultural descriptions.
+- Source reliability.
+- Consistency between independent evidence sources.
+- Image-recognition confidence when available.
+- Context supplied explicitly by the user.
+
+Do not calculate a fabricated trust percentage.
+
+Use calibrated confidence estimates only when the underlying system supports them. Otherwise use clearly defined evidence-based confidence levels.
+
+**Select the candidate best supported by the evidence, whether local or global.**
+
+Never give local results an automatic advantage merely because GPS is available.
+
+### Example
+
+A user is physically in Pune, Maharashtra, and uploads a photograph of the Eiffel Tower.
+
+Correct behavior:
+
+- Recognize the likely monument.
+- Verify its actual location in Paris, France.
+- Present relevant details about Paris and the Eiffel Tower.
+- Do not describe it as a Pune attraction.
+- Do not assign Pune coordinates to the monument.
+
+The same rule applies to locally photographed replicas: use visual and geographic evidence to distinguish the original landmark from a replica instead of assuming either.
+
+### Handling Uncertainty
+
+If the system cannot confidently identify the correct subject:
+
+1. Return plausible matches supported by evidence.
+2. Display clear, distinguishing information.
+3. Allow the user to select the intended result.
+4. Continue with the verified details of the selected entity.
+
+Do not invent an identity or location when the evidence is insufficient.
+
+---
+
+# PART 3 — SEARCH AUTOCOMPLETE AND RESULT SELECTION
+
+Make search more intelligent while retaining the existing search interface.
+
+When a user types a query, display a useful list of relevant suggestions.
+
+Suggestions should be based on the actual query rather than only preset content.
+
+Applicable categories may include places, monuments, architectural styles, museums, landmarks, cultural traditions, historical events, objects, and other subjects already supported by Charaiva.
+
+### Required Flow
+
+1. User starts typing.
+2. Relevant suggestions appear.
+3. User selects the intended suggestion.
+4. Charaiva resolves the selected entity.
+5. The existing information experience opens with relevant, verified details.
+
+### Important Requirements
+
+- Preserve the existing search box and layout.
+- Use debouncing to avoid unnecessary API requests.
+- Avoid duplicated suggestions.
+- Support spelling variations and alternative names.
+- Handle multilingual names where supported.
+- Distinguish similarly named places using their locations.
+- Preserve both local and global search capabilities.
+- Do not present unrelated suggestions merely to fill the list.
+- Do not navigate to a different entity after the user has explicitly selected one.
+
+Once the user selects a result, the AI must explain the actual selected subject rather than switching to a similarly named one.
+
+---
+
+# PART 4 — PROVIDE EXTREMELY DETAILED INFORMATION
+
+## Existing Problem
+
+Charaiva sometimes provides only basic information even when the user wants minute details.
+
+Improve informational depth substantially.
+
+The objective is to let users explore subjects from basic introductions to genuinely detailed explanations.
+
+### Detail Coverage
+
+Where relevant and verifiable, provide:
+
+- Complete identity and correct name.
+- Location and geographic context.
+- Historical background.
+- Origin and development.
+- Dates and chronological events.
+- Cultural significance.
+- Architectural design and styles.
+- Construction methods and materials.
+- Important people associated with the subject.
+- Lesser-known facts.
+- Hidden architectural features.
+- Local stories and traditions.
+- Symbolism and artistic features.
+- Changes over time.
+- Conservation and preservation.
+- Environmental or geographic significance.
+- Related historical events.
+- Important nearby attractions.
+- Useful visitor information when applicable.
+- Interesting comparisons.
+- Unusual or overlooked characteristics.
+- Common misconceptions.
+- Related topics for further exploration.
+
+Do not blindly apply every category to every subject. Determine which categories are genuinely relevant.
+
+### Depth Levels
+
+Support progressive exploration:
+
+**Overview:** A clear introduction.
+
+**Detailed Explanation:** More comprehensive information across relevant categories.
+
+**In-Depth Exploration:** Thorough explanations of selected aspects, backed by reliable sources when available.
+
+**Expert-Level Detail:** Carefully qualified, source-supported detail for users who want to investigate the topic deeply.
+
+These depth levels should extend the existing interface rather than replace existing Details Type categories.
+
+### Accuracy Requirements
+
+NEVER invent:
+
+- Construction dates.
+- Architects or builders.
+- Historic events.
+- Architectural features.
+- Entry fees.
+- Opening hours.
+- Local customs.
+- Geographic coordinates.
+- Historical anecdotes.
+- Legends presented as facts.
+- Facts about objects that cannot be identified.
+
+If sources disagree, acknowledge the disagreement.
+
+If information is unknown, say so.
+
+Do not fill missing information with generic AI-generated claims.
+
+---
+
+# PART 5 — PRESERVE THE EXISTING DETAILS TYPE FEATURE
+
+## ABSOLUTE PRESERVATION REQUIREMENT
+
+Charaiva already has an existing **Details Type** feature with topic categories, including Architectural Hidden Gems.
+
+This feature must remain intact.
+
+**Do not delete, rename, replace, merge, hide, or redesign any existing Details Type category or its underlying functionality.**
+
+Preserve:
+
+- Architectural Hidden Gems.
+- All other existing Details Type options.
+- Their existing names and order.
+- Existing user interactions.
+- Existing selection logic.
+- Existing category-specific explanations.
+- Existing presentation and navigation.
+- Existing state and preferences where applicable.
+
+The examples below are illustrative only. Do not use them to overwrite the real categories in the codebase.
+
+### Existing Details Type vs. New Explore More
+
+These must be two separate, complementary systems.
+
+**Existing Details Type**
+
+The user's established way of choosing what kind of information they want about a subject.
+
+**New Explore More**
+
+AI-generated clickable suggestions that help users discover additional related subjects.
+
+Both must work together.
+
+Example:
+
+The user chooses Architectural Hidden Gems for an old fort.
+
+Charaiva provides the appropriate architectural information using the existing Details Type functionality.
+
+Below that information, the user may additionally see five related exploration suggestions.
+
+The original Details Type remains available and continues working exactly as before.
+
+Do not replace the Details Type feature with five AI suggestions.
+
+---
+
+# PART 6 — ADD FIVE DYNAMIC EXPLORE MORE SUGGESTIONS
+
+Introduce a ChatGPT-like system that suggests relevant questions and exploration directions.
+
+Whenever the user explores a place, image, historical subject, architectural feature, cultural subject, or another supported entity, the system should offer **five contextual, clickable topics**.
+
+### Example
+
+Suppose the user searches for the Taj Mahal.
+
+Possible suggestions:
+
+1. Hidden Architectural Secrets
+2. How the Taj Mahal Was Constructed
+3. Symbolism Behind Its Design
+4. Lesser-Known Historical Stories
+5. Conservation and Preservation Challenges
+
+These are examples, not fixed suggestions.
+
+### Dynamic Generation
+
+Suggestions must:
+
+- Depend on the actual subject.
+- Reflect what the user is exploring.
+- Be relevant and sufficiently specific.
+- Avoid duplicates.
+- Avoid misleading claims.
+- Change appropriately between different subjects.
+- Respect the user's selected language.
+- Encourage meaningful exploration.
+
+Do not return the same five generic topics for every place or object.
+
+### Clickable Behavior
+
+Each topic must be a real, functional interaction.
+
+When selected, the user should be able to explore the chosen topic in greater depth.
+
+After reading an explanation, additional relevant follow-up suggestions may appear so that exploration can continue naturally.
+
+Prevent irrelevant or endlessly repetitive suggestions.
+
+---
+
+# PART 7 — OPTION B: OPEN DEEP CONVERSATION
+
+## Approved Feature
+
+Add a separate feature named:
+
+**Open Deep Conversation**
+
+This must provide an interactive, dedicated AI discussion experience.
+
+### Expected Behavior
+
+1. The user opens an existing Charaiva place or subject.
+2. The standard detail view appears.
+3. Existing Details Type functionality remains available.
+4. Five contextual Explore More suggestions appear.
+5. The user selects a topic or chooses Open Deep Conversation.
+6. A dedicated conversation view opens.
+7. The AI begins with the correct subject and selected topic.
+8. The user can ask follow-up questions naturally.
+9. The AI remembers the relevant conversation context within that session.
+10. The user can return to the original screen without losing their place.
+
+### Context Awareness
+
+The conversation should understand:
+
+- Which place or subject was selected.
+- Which Details Type was active.
+- Which exploration topic was selected.
+- The verified identity and location of the subject.
+- The user's selected language.
+- Relevant prior turns in the active conversation.
+
+Do not confuse subjects or transfer facts from unrelated places.
+
+### Return Navigation
+
+When users return from Deep Conversation, restore the original experience, including:
+
+- Selected subject.
+- Existing detail category.
+- Previously displayed information.
+- Scroll position where technically feasible.
+- Active search result.
+- Relevant filters and interface state.
+
+Opening Deep Conversation must not reset the Explore screen.
+
+### Separation from Existing AI Guide
+
+Do not replace or disrupt the existing AI Guide.
+
+Reuse existing AI services where appropriate, but keep the established AI Guide behavior intact.
+
+The new Deep Conversation must be integrated as an additive feature.
+
+### User Experience
+
+- Maintain the existing Charaiva design language.
+- Provide a clearly visible Back action.
+- Allow normal conversational questions.
+- Offer contextual follow-up topics.
+- Handle temporary AI errors gracefully.
+- Avoid losing an active conversation during ordinary navigation.
+- Do not claim conversations are permanently saved unless they really are.
+
+Do not open an external browser window by default. Implement a dedicated in-app conversation screen or view that supports returning to the original context.
+
+---
+
+# PART 8 — DATA ACCURACY AND SOURCE VERIFICATION
+
+## Highest-Priority Quality Requirement
+
+Charaiva must prioritize factual accuracy above generating lengthy, impressive-sounding content.
+
+The goal is to approach the highest realistically achievable accuracy, with uncertainty exposed rather than hidden.
+
+### Source Hierarchy
+
+Use authoritative sources suitable for the subject.
+
+Prefer, as applicable:
+
+1. Official government and tourism authorities.
+2. Archaeological and heritage authorities.
+3. UNESCO and other recognized heritage documentation.
+4. Official museum and institution databases.
+5. Credible academic research.
+6. Reputable geographic and mapping providers.
+7. Reliable specialist reference sources.
+
+For Indian monuments and heritage, use authoritative Indian sources such as the Archaeological Survey of India when relevant.
+
+Use Google Maps Platform and Google Places where configured and appropriate for geographic entities, with correct API usage and attribution.
+
+### Cross-Verification
+
+For significant factual claims:
+
+- Compare independent trustworthy sources when possible.
+- Check whether the source describes the correct entity.
+- Avoid confusing identical or similar names.
+- Check geographic and historical consistency.
+- Prefer up-to-date sources for changing information.
+- Distinguish historical facts from legends or interpretations.
+
+Do not claim that multiple sources confirm a fact if they do not.
+
+### Location Accuracy
+
+Never:
+
+- Invent coordinates.
+- Replace the real location with the user's city.
+- Label a place as nearby without geographic evidence.
+- Infer a precise location from a photograph without sufficient evidence.
+- Present unverified locations as established facts.
+
+### Photo Accuracy
+
+Ensure photographs represent the correct entity.
+
+Use provider identity and photo metadata where available.
+
+Do not attach an unrelated monument's photograph to a similarly named attraction.
+
+When visual verification is unavailable, use a neutral fallback rather than a misleading image.
+
+### Historical Accuracy
+
+Distinguish:
+
+- Documented facts.
+- Academic interpretations.
+- Folklore or traditional accounts.
+- Unverified claims.
+
+Never present folklore as verified history.
+
+### Current Information
+
+Information such as entry prices, access restrictions, operating hours, and temporary closures must be verified using current appropriate sources.
+
+When unavailable, state that current details could not be confirmed.
+
+### No Fabricated Confidence
+
+Do not display arbitrary numerical accuracy percentages.
+
+Use evidence-supported confidence indicators only when meaningful and technically justified.
+
+### Source Transparency
+
+Where useful, show a compact source reference or a working link to supporting evidence.
+
+Never invent citations or URLs.
+
+If an AI answer relies on general model knowledge instead of freshly verified sources, do not present it as live-verified information.
+
+---
+
+# PART 9 — PRESERVE MULTILINGUAL FUNCTIONALITY
+
+The user-selected app language must be respected across all new and repaired features.
+
+This includes:
+
+- Search suggestions.
+- Selected search results.
+- Place descriptions.
+- Details Type information.
+- Architectural Hidden Gems.
+- Five Explore More suggestions.
+- Deep Conversation.
+- Tour Journal interface labels.
+- Errors and status messages.
+
+Continue supporting every language already available in Charaiva.
+
+Do not replace the existing language system.
+
+Preserve original proper nouns when appropriate while providing understandable explanations in the selected language.
+
+Switching the app language should not unexpectedly change the selected place or erase the user's exploration context.
+
+---
+
+# PART 10 — PRESERVE ALL EXISTING CHARAIVA FEATURES
+
+The following existing functionality must remain operational wherever it already exists:
+
+- Home screen.
+- Existing onboarding and sign-in.
+- Explore Places.
+- Search.
+- AI Guide.
+- Ask feature.
+- Near Me.
+- GPS and location permissions.
+- Maps and location displays.
+- Attractions.
+- Place information and photographs.
+- Details Type.
+- Architectural Hidden Gems and all other detail categories.
+- Language settings.
+- Tour Journal.
+- Existing navigation and Back buttons.
+- Saved user preferences.
+- Existing animations and visual effects.
+- PWA installation and offline functionality currently implemented.
+- Any other feature currently present in the application.
+
+This list is not permission to change or rebuild these features.
+
+Existing behavior must remain the baseline.
+
+### Navigation Protection
+
+Do not reintroduce earlier Back-button problems.
+
+Returning from the AI Guide, Deep Conversation, Search, or a detail screen must lead to the appropriate previous screen.
+
+Preserve Explore context and avoid unexpectedly showing an incorrect or outdated home screen.
+
+### Performance Protection
+
+Do not slow down existing search and Attractions loading.
+
+Use efficient caching, request cancellation, debouncing, and deduplication where appropriate.
+
+Ensure cache keys distinguish the entity, geographic context, language, data freshness, and relevant query parameters.
+
+Do not reuse cached local results as if they were valid global results.
+
+Do not introduce unnecessary API usage or repeated AI calls that increase costs without improving accuracy.
+
+---
+
+# PART 11 — TECHNICAL IMPLEMENTATION INSTRUCTIONS
+
+Before writing code:
+
+1. Inspect the existing application architecture.
+2. Identify the components responsible for Tour Journal.
+3. Identify how search and image identification currently work.
+4. Locate the GPS and geographic filtering logic.
+5. Inspect the existing Details Type implementation.
+6. Identify the current AI provider integration.
+7. Review relevant existing database tables and access permissions.
+8. Identify the existing navigation and state-management system.
+9. Check language preferences and translation architecture.
+10. Identify existing working functionality that must not change.
+
+### Implementation Rules
+
+- Extend existing services wherever possible.
+- Avoid duplicate AI pipelines.
+- Preserve existing route paths.
+- Avoid destructive database migrations.
+- Never expose API keys or privileged credentials in client-side code.
+- Use server-side integrations for secret-bearing API calls.
+- Validate provider responses.
+- Use safe error handling.
+- Avoid sending unnecessary user information or private photos to third parties.
+- Preserve permission and privacy boundaries.
+- Validate every new feature in the actual running application.
+
+### Search Implementation
+
+Build the local/global evidence comparison into the current search pipeline rather than creating conflicting independent search interfaces.
+
+Maintain entity identifiers across search suggestions, detail views, AI conversations, photographs, and geographic information.
+
+### AI Conversation Implementation
+
+Reuse established AI infrastructure where appropriate.
+
+Maintain structured context for the selected entity and conversation.
+
+Prevent AI answers from silently overriding verified geographic identities.
+
+### Database Implementation
+
+Modify data structures only when technically necessary.
+
+Use additive, compatible migrations with appropriate access controls.
+
+Protect existing Tour Journal records and user data.
+
+---
+
+# PART 12 — REQUIRED END-TO-END TESTING
+
+Do not mark the implementation complete merely because the code compiles.
+
+Test actual user behavior.
+
+## Test A — Tour Journal
+
+Create a journal entry with a photograph and notes.
+
+Refresh the application.
+
+Confirm the entry is still present.
+
+Close and reopen the application.
+
+Confirm it remains available.
+
+For authenticated users, sign back into the same account and verify retrieval.
+
+Test editing, deleting, and failed-save behavior.
+
+## Test B — Local Place Identification
+
+Search for an actual place in the user's current city.
+
+Confirm its correct identity, details, and geographic location.
+
+## Test C — Global Place Identification
+
+Search for a landmark outside the user's current city.
+
+Confirm the real location is displayed.
+
+Verify the system does not assign current GPS coordinates to it.
+
+## Test D — Image Identification
+
+Upload a photograph of a landmark outside the user's city.
+
+Confirm that the image-recognition process considers global candidates.
+
+If ambiguous, confirm the application offers appropriate possible matches.
+
+## Test E — Ambiguous Search
+
+Search for a name shared by multiple places.
+
+Confirm suggestions distinguish the relevant entities.
+
+After selection, verify the application explains the correct one.
+
+## Test F — Detailed Information
+
+Select a monument or historical subject.
+
+Verify that relevant detailed information is available without fabricated facts.
+
+Check architectural, cultural, and historical information against available authoritative sources.
+
+## Test G — Existing Details Type
+
+Open Architectural Hidden Gems.
+
+Verify that its original behavior remains intact.
+
+Repeat with every other existing Details Type option.
+
+## Test H — Explore More
+
+Open different subjects.
+
+Verify that each provides five relevant clickable exploration suggestions.
+
+Check that the topics vary appropriately.
+
+## Test I — Deep Conversation
+
+Select an Explore More topic.
+
+Open Deep Conversation.
+
+Ask several follow-up questions.
+
+Verify the AI maintains the correct subject, selected topic, and verified location.
+
+Return to the previous screen.
+
+Confirm the original state is preserved.
+
+## Test J — Multilingual Support
+
+Change the app language.
+
+Verify the newly added features use the selected language and preserve existing multilingual behavior.
+
+## Test K — Regression Testing
+
+Test all relevant existing features, especially:
+
+- AI Guide.
+- Explore navigation.
+- Search.
+- GPS.
+- Maps.
+- Attractions.
+- Existing Details Type.
+- Tour Journal.
+- Back navigation.
+- PWA behavior.
+- User preferences.
+
+## Test L — Data Integrity and Privacy
+
+Confirm users cannot view or alter another user's private journal.
+
+Confirm no existing journal or preference data was lost.
+
+Confirm the correct database permissions remain enforced.
+
+## Test M — Performance
+
+Confirm the improvements do not introduce avoidable delays, excessive API calls, or inconsistent results between cached and fresh queries.
+
+---
+
+# PART 13 — ACCEPTANCE CRITERIA
+
+The task is complete only when:
+
+1. Tour Journal persistence and user-specific retrieval work reliably.
+2. Searches and uploaded photographs no longer automatically inherit the user's current city.
+3. Local and global candidate evidence is evaluated correctly.
+4. Users can select the intended entity from relevant search suggestions.
+5. Detailed information is richer, properly scoped, and factually supported.
+6. All existing Details Type categories remain available and functional.
+7. Five dynamic clickable Explore More suggestions work.
+8. Open Deep Conversation works with appropriate context.
+9. Returning from Deep Conversation restores the original screen context.
+10. The selected language is respected.
+11. Existing app features continue functioning.
+12. Existing user data remains safe.
+13. No knowingly fabricated facts, coordinates, images, citations, or confidence scores are introduced.
+14. Newly added functionality has been tested against the actual application.
+
+---
+
+# PART 14 — FINAL IMPLEMENTATION REPORT
+
+After implementing and testing, provide a clear report with:
+
+- The specific causes identified for the Tour Journal and incorrect-location problems.
+- Files and components changed.
+- Existing code or features preserved.
+- New features implemented.
+- Database or API changes, if any.
+- Actual tests performed and their results.
+- Any remaining limitations or unverified behavior.
+- Whether any external API configuration is still required.
+
+Do not claim tests passed if they were not executed.
+
+Do not silently make unrelated improvements.
+
+If an unrelated issue is discovered, report it instead of modifying additional features without authorization.
+
+---
+
+# FINAL OVERRIDING COMMAND
+
+**PRESERVE FIRST. REPAIR SECOND. ENHANCE THIRD. VERIFY EVERYTHING.**
+
+Charaiva must remain the same familiar application, with its original functions and appearance intact.
+
+The only authorized improvements are:
+
+- Repairing Tour Journal functionality.
+- Correcting false location assumptions.
+- Improving local and global search evidence comparison.
+- Adding relevant selectable search suggestions.
+- Increasing the depth and factual reliability of information.
+- Adding five contextual Explore More suggestions.
+- Adding the dedicated Open Deep Conversation experience.
+- Ensuring the enhancements respect existing language settings, navigation, privacy, and data.
+
+**The existing Details Type feature, including Architectural Hidden Gems and every other existing category, must be preserved exactly as part of the original application.**
+
+Do not rebuild Charaiva. Do not replace working features. Do not change unrelated functionality.
+
+Implement these changes in the existing application using safe, incremental, backward-compatible modifications.

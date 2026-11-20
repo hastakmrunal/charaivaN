@@ -1,0 +1,917 @@
+# CHARAIVANEW — COMPLETE PRODUCTION REPAIR, ACCURACY, SECURITY & REGRESSION TESTING PROMPT
+
+## CRITICAL INSTRUCTION — READ BEFORE MAKING ANY CHANGE
+
+You are working on the EXISTING CharaivaNew application in Google AI Studio.
+
+This is a **strictly limited debugging, reliability, security, and data-accuracy improvement task**.
+
+It is NOT a request to rebuild, redesign, modernize, simplify, restructure, replace, or add new product features.
+
+### ABSOLUTE NON-NEGOTIABLE REQUIREMENT
+
+**DO NOT CHANGE THE EXISTING UI, UX, CONCEPT, FEATURES, NAVIGATION, BRANDING, WORKFLOWS, OR WORKING FUNCTIONALITY.**
+
+Preserve the application exactly as it currently appears and operates, except where a confirmed defect must be repaired.
+
+Keep unchanged:
+
+- Overall application concept and purpose.
+- Existing home screen and page layouts.
+- Branding, logo, colors, fonts, spacing, icons, buttons, and visual styling.
+- Animations, transitions, and responsive design.
+- Existing screens, modals, menus, cards, and navigation.
+- All existing feature names and categories.
+- Existing user journeys and interaction patterns.
+- Current user accounts and authentication architecture.
+- Existing database records and user-generated content.
+- Working APIs, services, integrations, and data flows.
+- Existing search experience.
+- Existing Details Type feature and all its categories.
+- Architectural Hidden Gems and every other existing detail category.
+- Five clickable Explore More suggestions.
+- Open Deep Conversation.
+- Existing AI Guide.
+- Tour Journal.
+- Multilingual support.
+- PWA functionality.
+- All other existing functionality, including features not explicitly mentioned here.
+
+**Do not use this task as an opportunity for unrelated improvements.**
+
+Do not add new screens, change button placement, introduce new design systems, or replace existing components unnecessarily.
+
+If a fix can be achieved by changing five lines, do not rewrite an entire component.
+
+---
+
+# PHASE 1 — PROTECT THE CURRENT APPLICATION
+
+Before implementing changes:
+
+1. Inspect the complete existing project.
+2. Identify the current functioning architecture.
+3. Establish a recoverable checkpoint of the existing code.
+4. Ensure that existing user data is protected before modifying persistence logic.
+5. Record the current routes, components, services, and API endpoints.
+6. Identify all features potentially affected by the planned fixes.
+7. Determine the smallest safe modification for each problem.
+
+Do not wipe, reset, or recreate the database.
+
+Do not recreate authentication.
+
+Do not reinstall or replace libraries unless a confirmed dependency problem requires it.
+
+Do not rename existing API routes, components, database collections, or storage keys without an unavoidable technical reason and a compatible migration.
+
+If the environment does not support creating a reliable checkpoint, report that limitation rather than pretending a backup exists.
+
+---
+
+# PHASE 2 — FIX DEEP IN-DEPTH EXPLORATION JSON ERROR
+
+## Confirmed Error
+
+The Deep In-Depth Exploration interface displays:
+
+`Unexpected token '<', "<!doctype "... is not valid JSON`
+
+The application expects JSON but sometimes receives HTML.
+
+The frontend currently contains unsafe response-parsing behavior in:
+
+`src/components/DeepDiveModal.tsx`
+
+The relevant backend implementation is located in:
+
+`server.ts`
+
+These are known investigation targets. Inspect the current versions before editing because the code may have changed since the audit.
+
+## Required Fix
+
+Trace the complete Deep Exploration request lifecycle.
+
+Inspect:
+
+- Request endpoint.
+- HTTP method.
+- HTTP status.
+- Response Content-Type.
+- Response body format.
+- Backend route registration.
+- API middleware ordering.
+- Production and development routing.
+- Vite fallback behavior.
+- Authentication and session handling.
+- AI provider response handling.
+- Error serialization.
+- Deployment configuration.
+
+Identify why the expected JSON response becomes HTML.
+
+Do not assume that the frontend parsing behavior is the underlying server problem.
+
+### Frontend Response Validation
+
+Before calling `response.json()`:
+
+1. Check `response.ok`.
+2. Check the response Content-Type.
+3. Confirm the response is an expected JSON response.
+4. Handle non-JSON responses safely.
+5. Catch malformed JSON.
+6. Validate the expected response structure.
+7. Avoid displaying raw HTML or internal technical errors to users.
+
+Never show server stack traces, API credentials, or sensitive internal error details in the UI.
+
+### Backend Contract
+
+The Deep Exploration API must return consistent structured JSON for successful and failed requests.
+
+Error responses must use an appropriate HTTP status and machine-readable error structure.
+
+Do not return HTTP 200 with fabricated success content when the actual AI operation failed.
+
+Preserve all fields genuinely required by the current frontend.
+
+Do not remove supported response fields.
+
+### Existing Error UI
+
+Use the existing error-display component and styling.
+
+Keep current button locations and visual structure.
+
+If an existing Retry button is available, ensure that it retries the failed request correctly.
+
+Do not redesign the modal.
+
+Do not replace the modal with another interface.
+
+### Acceptance Tests
+
+Verify:
+
+- Valid successful JSON.
+- Server returning HTML.
+- HTTP 404.
+- HTTP 500.
+- Invalid JSON.
+- Empty response.
+- AI service timeout.
+- Rate-limit response.
+- Network disconnection.
+- Authentication failure.
+- Repeated retry requests.
+
+All cases must be handled without crashing the application.
+
+---
+
+# PHASE 3 — REMOVE FABRICATED HISTORICAL AND ARCHITECTURAL INFORMATION
+
+## Critical Problem
+
+The backend currently contains fallback behavior that can return generic architectural or historical claims when the AI service fails.
+
+Examples of potentially fabricated claims involve:
+
+- Ancient inscriptions.
+- Architectural alignments.
+- Historical dynasties.
+- Construction techniques.
+- Hidden architectural structures.
+- Cultural or historical significance.
+
+These statements must never be presented as verified facts about a selected location without adequate evidence.
+
+## Required Repair
+
+Inspect the relevant fallback handling in `server.ts`.
+
+Remove the practice of presenting unverified generic content as successful, place-specific information.
+
+Do not simply replace the existing fabricated statements with different generic statements.
+
+### AI Failure Behavior
+
+When AI content generation fails:
+
+1. Check whether genuinely verified information is already available through the existing data pipeline.
+2. Reuse verified information only if its identity and source are appropriate for the selected subject.
+3. Otherwise return an explicit service failure.
+4. Display the error through the existing interface.
+5. Allow the existing retry workflow where supported.
+6. Never claim that generated information was successfully verified when it was not.
+
+Do not replace real AI responses with static hardcoded descriptions.
+
+### Accuracy Requirements
+
+Prioritize the highest achievable factual accuracy.
+
+Never fabricate:
+
+- Geographic coordinates.
+- Monument locations.
+- Architects or builders.
+- Historical dates.
+- Construction materials.
+- Dynastic associations.
+- Architectural features.
+- Historical events.
+- Entry fees.
+- Operating hours.
+- Source references.
+- Photographs.
+- Place identities.
+
+When reliable information is missing, clearly acknowledge uncertainty.
+
+A missing fact is preferable to an invented fact.
+
+### Source Verification
+
+Use the application's existing trustworthy data sources.
+
+Where configured and applicable, prioritize authoritative sources such as:
+
+- Official government tourism resources.
+- Archaeological Survey of India.
+- UNESCO documentation.
+- Official museum and heritage sources.
+- Credible academic publications.
+- Authorized geographic and mapping providers.
+
+Do not introduce expensive new services without necessity.
+
+Do not fabricate citations or source links.
+
+Distinguish verified facts, interpretations, legends, and uncertain claims.
+
+**Never describe Charaiva's information as 100% verified unless the specific claims have actually been verified.**
+
+The objective is maximum practical reliability, not a misleading accuracy guarantee.
+
+---
+
+# PHASE 4 — FIX INCORRECT GEOGRAPHIC CONTEXT
+
+## Identified Risk
+
+The Deep Exploration backend can use `"Current Location"` when the actual location of the selected subject is missing.
+
+This can incorrectly associate a searched or photographed subject with the user's present city.
+
+## Required Repair
+
+Remove the assumption that missing subject coordinates mean the subject exists at the user's current location.
+
+Maintain a strict distinction between:
+
+**User Location:** Where the person using Charaiva currently is.
+
+**Subject Location:** Where the searched place, monument, building, object, or attraction actually exists.
+
+These must never be automatically treated as identical.
+
+### Required Behavior
+
+When a verified subject location is available, use that location.
+
+When its location is unknown, preserve the unknown state.
+
+Do not manufacture a city, state, country, or coordinates merely to complete the AI prompt.
+
+### Local and Global Search
+
+Preserve the existing local and global search functionality.
+
+When a subject could exist locally or globally:
+
+- Evaluate available evidence from both contexts.
+- Resolve the correct identity.
+- Avoid an automatic preference for the user's current city.
+- Preserve the user's explicitly selected result.
+- Do not silently substitute a similarly named attraction.
+
+### Photo Identification
+
+If an uploaded image depicts a landmark outside the user's current city, retain the landmark's actual verified identity and location.
+
+Do not automatically assign the current GPS location to photographed content.
+
+Use existing image-recognition and geographic services.
+
+Do not invent coordinates or visually unsupported identities.
+
+### Example Test
+
+The user is located in Pune and searches for or uploads an image of the Eiffel Tower in Paris.
+
+The application must not describe the tower as being in Pune.
+
+It must use the correct verified geographic information.
+
+If the image is ambiguous or may depict a replica, express uncertainty rather than inventing certainty.
+
+### Important
+
+Make these corrections within the existing search and geographic data flow.
+
+Do not redesign Search, Near Me, Explore Places, Google Maps, or the GPS interface.
+
+---
+
+# PHASE 5 — FIX STALE DEEP EXPLORATION CONTENT
+
+## Identified Issue
+
+The data-loading logic in `DeepDiveModal.tsx` may not account for all relevant changes in the selected subject.
+
+This can cause content from a previous selection to remain visible.
+
+## Required Repair
+
+Inspect the component's state and effect dependencies.
+
+Ensure that content corresponds to the current combination of:
+
+- Selected subject identity.
+- Selected title.
+- Actual subject location.
+- Relevant category.
+- Selected language.
+- Active detail context.
+
+Use the application's existing state-management patterns.
+
+### Prevent Race Conditions
+
+If the user switches from one place to another while a request is still loading:
+
+- Cancel the old request where supported.
+- Otherwise ignore obsolete responses.
+- Ensure the old result cannot overwrite newer content.
+- Avoid unnecessary duplicate requests.
+- Preserve existing loading visuals.
+
+### Example
+
+The user opens an architectural detail for a fort, then selects a different temple.
+
+The temple view must not display information about the fort.
+
+Changing the language must not unexpectedly display content in the previous language.
+
+### UI Preservation
+
+Keep the existing modal layout and its current controls.
+
+Do not change typography, positioning, dimensions, or the selected content presentation.
+
+---
+
+# PHASE 6 — SECURE TOUR JOURNAL OWNERSHIP AND PERSISTENCE
+
+## Current Architecture
+
+The existing Tour Journal contains functionality involving Firebase and guest-device storage.
+
+Preserve both modes wherever they are currently supported.
+
+## Identified Risk
+
+Inspect journal update logic that may classify an entry as a guest-owned entry when its owner does not match the authenticated user.
+
+This must not allow account-owned entries to be incorrectly processed as guest entries.
+
+## Required Security Rules
+
+1. An authenticated account may access only entries it owns or is explicitly authorized to access.
+2. Guest entries must remain associated with their correct device-local guest storage context.
+3. A user-ID mismatch must never automatically grant guest ownership.
+4. No account may edit or delete another account's private journal.
+5. Unauthorized access attempts must fail safely.
+6. Do not rely solely on frontend checks.
+7. Preserve Firebase security rules and strengthen them only where actual gaps are identified.
+
+### Persistence Tests
+
+Test the existing supported operations:
+
+- Create journal entry.
+- Save entry.
+- Reload application.
+- Reopen application.
+- Edit entry.
+- Delete entry.
+- Add or retrieve photographs.
+- Retrieve authenticated account records.
+- Retrieve guest-device records.
+- Switch between supported account states.
+
+Verify that saved entries remain intact according to the application's existing persistence design.
+
+Do not silently migrate guest data into another user's account.
+
+Do not expose private information through debug logs.
+
+### Data Protection
+
+Never clear user storage as a debugging shortcut.
+
+Do not delete existing records.
+
+Do not reset Firebase collections.
+
+Do not recreate user accounts.
+
+Avoid destructive migrations.
+
+### User Experience Preservation
+
+Maintain the existing Tour Journal UI and workflow exactly.
+
+Do not add new authentication steps.
+
+Do not remove guest mode.
+
+Do not change existing journal features or their appearance.
+
+---
+
+# PHASE 7 — PROTECT THE EXISTING DETAILS TYPE FEATURE
+
+This section is an absolute regression-protection requirement.
+
+The current Charaiva application already contains a Details Type feature.
+
+It includes Architectural Hidden Gems and other existing categories.
+
+**Do not replace, rename, remove, merge, simplify, reorder, or redesign the existing Details Type options.**
+
+Preserve:
+
+- Every existing category.
+- Category-specific information.
+- Existing selections.
+- Current UI behavior.
+- Existing interaction flow.
+- Available depth of explanation.
+- Relevant state and navigation.
+
+Inspect actual category definitions in the codebase before making changes.
+
+Do not assume that an illustrative list of categories is complete.
+
+### Separate Systems
+
+The following must remain distinct:
+
+**Existing Details Type:** The current system for choosing what kind of information to explore.
+
+**Five Explore More Suggestions:** Contextual, clickable AI-generated exploration topics.
+
+**Open Deep Conversation:** The dedicated conversational experience for exploring a subject in greater detail.
+
+All three should continue working together without replacing each other.
+
+Do not change their established UI or interactions.
+
+---
+
+# PHASE 8 — PRESERVE AI GUIDE AND DEEP CONVERSATION
+
+The existing AI Guide and Open Deep Conversation must continue functioning.
+
+Do not merge them into a new assistant.
+
+Do not rewrite their personalities, conversational design, or feature scope.
+
+Do not introduce a different AI provider unless the existing configured integration is genuinely unusable and the change is explicitly approved.
+
+### Context Accuracy
+
+Ensure the AI receives the appropriate existing context:
+
+- Correct selected subject.
+- Verified subject location where known.
+- Active selected detail category.
+- Selected language.
+- Relevant exploration topic.
+- Existing conversation context.
+
+Never silently change the subject.
+
+Never attribute facts about one place to another.
+
+### Navigation Protection
+
+Returning from Deep Conversation must preserve the existing expected navigation behavior.
+
+Do not introduce new routes unnecessarily.
+
+Do not reintroduce the previous issue where returning from AI Guide displayed an incorrect home screen.
+
+Maintain the user's selected subject and previous screen context.
+
+Do not introduce new chat persistence behavior or change existing retention rules.
+
+---
+
+# PHASE 9 — PRESERVE MULTILINGUAL SUPPORT
+
+The selected language must remain functional throughout all repaired features.
+
+This includes:
+
+- Deep Exploration.
+- Existing Details Type categories.
+- AI Guide.
+- Search suggestions.
+- Explore More.
+- Open Deep Conversation.
+- Tour Journal.
+- Error messages.
+
+Use the application's existing translation and localization architecture.
+
+Do not replace the language selector.
+
+Do not change supported languages.
+
+Do not force English output when another language is selected.
+
+### Hindi Test Case
+
+Test the following scenario:
+
+**Selected subject:** Jatayu Temple Gate, Kerala, India.
+
+**Selected language:** Hindi.
+
+Verify:
+
+1. The Deep Exploration request succeeds when the provider is operational.
+2. The correct subject is used.
+3. The correct geographic context is preserved.
+4. The returned information uses Hindi appropriately.
+5. Existing English proper names or local place names are preserved where appropriate.
+6. The JSON parsing error does not appear.
+7. Failures display an appropriate localized error instead of fabricated content.
+
+Do not hardcode the content of this test into the application.
+
+---
+
+# PHASE 10 — PERFORMANCE AND API USAGE PROTECTION
+
+All fixes must preserve or improve existing performance.
+
+Do not introduce unnecessary Gemini requests.
+
+Do not repeatedly request the same information without a justified reason.
+
+Do not make the Explore Places or Attractions screens slower.
+
+Use existing request cancellation, caching, debouncing, and deduplication patterns where available.
+
+### Cache Accuracy
+
+Ensure cached information does not mix:
+
+- Different places.
+- Local and global geographic contexts.
+- Different languages.
+- Different Details Type categories.
+- Different subject identifiers.
+
+Do not solve a cache issue by permanently disabling all caching.
+
+Do not increase API costs unnecessarily.
+
+### Security
+
+Preserve server-side handling of sensitive API credentials.
+
+Do not expose:
+
+- Gemini API keys.
+- Google Maps API secrets.
+- Firebase privileged credentials.
+- Service account credentials.
+- Internal tokens.
+
+Do not add hardcoded secrets to frontend code.
+
+---
+
+# PHASE 11 — COMPREHENSIVE REGRESSION TESTING
+
+After making the targeted repairs, thoroughly test the existing application.
+
+The purpose is to confirm that repairs did not damage working features.
+
+## A. Application Build
+
+- Install dependencies using the project's existing package manager.
+- Run available linting.
+- Run TypeScript checks.
+- Run existing automated tests.
+- Run the production build.
+- Identify and resolve errors introduced by these repairs.
+
+Do not arbitrarily upgrade dependencies.
+
+## B. Deep Exploration
+
+Test successful requests, non-JSON responses, error responses, retry behavior, language changes, and switching between subjects.
+
+## C. Data Accuracy
+
+Verify that AI failures do not produce fabricated facts.
+
+Check that missing evidence remains identified as unknown or unverified.
+
+## D. Geographic Search
+
+Test a verified local place, a verified global place, ambiguous names, and a place outside the user's current city.
+
+Confirm correct identity and location handling.
+
+## E. Photo Identification
+
+Test recognizable local and global landmarks.
+
+Verify that uploaded-image identification does not automatically inherit the user's GPS location.
+
+## F. Tour Journal
+
+Test saving, persistence, retrieval, editing, deleting, and account isolation.
+
+Ensure guest mode continues working.
+
+## G. Existing Details Type
+
+Test all existing categories, including Architectural Hidden Gems.
+
+Compare the before-and-after behavior.
+
+## H. Explore More
+
+Verify that all five contextual suggestions continue functioning.
+
+Do not change their count, visual design, or interaction unless an existing defect prevents correct operation.
+
+## I. Deep Conversation
+
+Test opening, context retention, follow-up questions, and return navigation.
+
+## J. Navigation
+
+Test Back and Close actions across all relevant screens.
+
+Verify the correct previous screen appears.
+
+## K. Multilingual Functionality
+
+Test Hindi, English, and the other existing supported languages wherever possible.
+
+## L. Responsive Behavior
+
+Test desktop and mobile layouts.
+
+Do not change established breakpoints or styling without necessity.
+
+## M. Authentication and Security
+
+Test existing login and guest flows.
+
+Test Tour Journal account ownership and Firebase access rules.
+
+## N. Existing Features
+
+Perform regression checks on the current application features, including:
+
+- Home.
+- Search.
+- Explore.
+- AI Guide.
+- Ask.
+- Near Me.
+- GPS.
+- Maps.
+- Attractions.
+- Photo Guide.
+- Details Type.
+- Deep Exploration.
+- Explore More.
+- Deep Conversation.
+- Tour Journal.
+- Settings.
+- Language selection.
+- Existing navigation.
+- PWA behavior.
+- Any additional existing features found in the codebase.
+
+Do not remove a feature simply because it fails a test.
+
+Investigate its cause and repair only the relevant defect.
+
+---
+
+# PHASE 12 — UI AND FEATURE NON-REGRESSION VERIFICATION
+
+After implementation, compare the application against its original state.
+
+Verify that:
+
+- No screens have disappeared.
+- No feature has been renamed.
+- No buttons have moved.
+- No layout has been redesigned.
+- No colors have been changed.
+- No fonts have been replaced.
+- No icons have been unnecessarily changed.
+- No working navigation path has been removed.
+- No existing Details Type category has been lost.
+- No working user data has been deleted.
+- No authentication flow has changed.
+- No existing integration has been removed.
+
+Where screenshot comparison tools are available, capture before-and-after screenshots at the same viewport dimensions.
+
+Use visual comparison to identify unintended changes.
+
+If screenshots or browser testing are unavailable, explicitly state that visual equivalence has not been verified.
+
+**Do not claim the original UI was preserved merely because the code compiles.**
+
+---
+
+# PHASE 13 — STRICT CHANGE CONTROL
+
+Before modifying any file, classify the intended change as one of the following:
+
+1. Confirmed defect repair.
+2. Required security correction.
+3. Required accuracy correction.
+4. Necessary compatibility adjustment directly caused by one of the above.
+
+Do not implement anything outside these categories.
+
+### Forbidden Changes
+
+- Full project rewrite.
+- UI redesign.
+- New homepage.
+- New branding.
+- Changes to working feature names.
+- Removal of existing functionality.
+- Unrequested feature additions.
+- New login requirements.
+- Unnecessary database restructuring.
+- Replacement of working AI providers.
+- Hardcoded fake responses.
+- Mock data presented as real data.
+- Unnecessary package upgrades.
+- Changes to user preferences.
+- Automatic deletion of data.
+- Replacing existing Details Type categories.
+- Changes to the overall Charaiva concept.
+
+### When a Fix Conflicts with Preservation
+
+Choose the smallest safe correction that preserves the existing functionality.
+
+If a required repair cannot be made safely without a significant unrelated change, do not make that unrelated change automatically.
+
+Explain the conflict and identify the smallest compatible solution.
+
+---
+
+# PHASE 14 — REQUIRED FINAL REPORT
+
+After completing all possible repairs and testing, provide a detailed implementation report.
+
+Include:
+
+### 1. Root Causes
+
+Explain the actual causes discovered for:
+
+- Deep Exploration JSON error.
+- Fabricated fallback content.
+- Incorrect geographic context.
+- Stale Deep Exploration data.
+- Tour Journal ownership risk.
+
+Separate confirmed causes from suspected causes.
+
+### 2. Files Changed
+
+List every modified file.
+
+Explain the specific purpose of each modification.
+
+### 3. Preserved Features
+
+Confirm which existing features were checked for regression.
+
+### 4. Test Results
+
+For every test, use one of these statuses:
+
+- PASS — Test executed successfully.
+- FAIL — Test executed and failed.
+- BLOCKED — Test could not be completed.
+- NOT TESTED — Test was not executed.
+
+Never label an unexecuted test as passed.
+
+### 5. Remaining Limitations
+
+Report any problems requiring:
+
+- Live API credentials.
+- Firebase configuration.
+- Deployment configuration.
+- Google Maps configuration.
+- External service access.
+- Manual testing.
+
+### 6. Final Deployment Readiness
+
+State whether the application is:
+
+- Ready for deployment.
+- Ready with verified limitations.
+- Not yet ready.
+
+Base this conclusion on actual evidence.
+
+---
+
+# FINAL ACCEPTANCE CRITERIA
+
+Do not consider this task completed until the following have been verified wherever the required environment is available:
+
+1. Deep Exploration no longer crashes on HTML or malformed API responses.
+2. The underlying response-routing issue has been diagnosed and repaired.
+3. AI failures no longer return fabricated historical information.
+4. Unknown subject locations are not replaced by the user's current location.
+5. Deep Exploration does not show stale content from another subject.
+6. Tour Journal ownership is enforced correctly.
+7. Existing journal data is preserved.
+8. All existing Details Type categories remain functional.
+9. Five Explore More suggestions remain functional.
+10. Open Deep Conversation remains functional.
+11. Existing AI Guide behavior is preserved.
+12. Multilingual functionality remains intact.
+13. Existing search and geographic features remain available.
+14. Existing UI, design, branding, and navigation are preserved.
+15. The production build succeeds.
+16. No new critical defects are introduced.
+17. All tests are honestly reported.
+
+A working feature must not be sacrificed to repair another feature.
+
+A successful build alone does not prove application correctness.
+
+**Do not make unsupported claims that every response is 100% accurate or that every feature is working without verification.**
+
+---
+
+# FINAL OVERRIDING INSTRUCTION
+
+## FIX THE ENGINE. PRESERVE THE EXPERIENCE.
+
+CharaivaNew must remain CharaivaNew.
+
+Keep the same:
+
+- UI.
+- Design.
+- Identity.
+- Concept.
+- Features.
+- Screens.
+- Navigation.
+- User workflows.
+- Data.
+- Integrations.
+- Existing working functionality.
+
+Repair only the confirmed reliability, security, data accuracy, geographic-context, and state-management defects.
+
+Use the current codebase as the source of truth.
+
+Make precise, minimal, backward-compatible changes.
+
+**Do not rebuild the application. Do not redesign it. Do not remove anything that already works.**
+
+Implement the repairs, execute the available tests, and report the results accurately.

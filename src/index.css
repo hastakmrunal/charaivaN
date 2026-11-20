@@ -1,0 +1,322 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 30rem;
+}
+
+@layer base {
+  :root {
+    /* Theme 1: Celestial Twilight (Default - Calm Midnight Slate, Muted Antique Gold, Serene Teal) */
+    --theme-bg-gradient: radial-gradient(circle at 18% 12%, #111b2e 0%, #0b1220 48%, #060912 100%);
+    --theme-card-bg: rgba(16, 24, 41, 0.86);
+    --theme-card-bg-subtle: rgba(11, 17, 30, 0.80);
+    --theme-card-hover: rgba(24, 35, 58, 0.94);
+    --theme-card-border: rgba(71, 85, 105, 0.45);
+    --theme-card-border-glow: rgba(42, 157, 143, 0.50);
+    --theme-header-bg: rgba(9, 14, 26, 0.92);
+    --theme-nav-bg: rgba(7, 11, 21, 0.95);
+    --theme-input-bg: rgba(12, 19, 34, 0.88);
+    --theme-input-border: rgba(71, 85, 105, 0.55);
+    --theme-accent-primary: #c99a4e;
+    --theme-accent-primary-gradient: linear-gradient(135deg, #c99a4e 0%, #a67c37 100%);
+    --theme-accent-primary-text: #0b0f17;
+    --theme-accent-secondary: #2a9d8f;
+    --theme-accent-secondary-gradient: linear-gradient(135deg, #2a9d8f 0%, #217b70 100%);
+    --theme-accent-badge-bg: rgba(42, 157, 143, 0.14);
+    --theme-accent-badge-text: #6ec4b8;
+    --theme-accent-badge-border: rgba(42, 157, 143, 0.32);
+    --theme-gold-badge-bg: rgba(201, 154, 78, 0.14);
+    --theme-gold-badge-text: #dfbe82;
+    --theme-gold-badge-border: rgba(201, 154, 78, 0.32);
+    --theme-text-title: #f1f5f9;
+    --theme-text-body: #dbe3ee;
+    --theme-text-muted: #94a3b8;
+    --theme-shadow-glow: rgba(42, 157, 143, 0.16);
+    --theme-ambient-glow-1: rgba(42, 157, 143, 0.12);
+    --theme-ambient-glow-2: rgba(201, 154, 78, 0.09);
+  }
+
+  [data-theme="sunset"] {
+    /* Theme 2: Dusk Terracotta (Deep Plum Charcoal, Muted Rose Terracotta, Warm Sandstone) */
+    --theme-bg-gradient: radial-gradient(circle at 20% 12%, #241421 0%, #150c15 48%, #0b060b 100%);
+    --theme-card-bg: rgba(31, 18, 30, 0.86);
+    --theme-card-bg-subtle: rgba(22, 12, 22, 0.80);
+    --theme-card-hover: rgba(44, 26, 42, 0.94);
+    --theme-card-border: rgba(110, 74, 96, 0.45);
+    --theme-card-border-glow: rgba(184, 101, 102, 0.50);
+    --theme-header-bg: rgba(18, 10, 18, 0.92);
+    --theme-nav-bg: rgba(13, 7, 14, 0.95);
+    --theme-input-bg: rgba(24, 13, 24, 0.88);
+    --theme-input-border: rgba(110, 74, 96, 0.55);
+    --theme-accent-primary: #b86566;
+    --theme-accent-primary-gradient: linear-gradient(135deg, #b86566 0%, #995054 100%);
+    --theme-accent-primary-text: #faf5f5;
+    --theme-accent-secondary: #c98b5b;
+    --theme-accent-secondary-gradient: linear-gradient(135deg, #c98b5b 0%, #9e6741 100%);
+    --theme-accent-badge-bg: rgba(184, 101, 102, 0.14);
+    --theme-accent-badge-text: #dfa1a2;
+    --theme-accent-badge-border: rgba(184, 101, 102, 0.32);
+    --theme-gold-badge-bg: rgba(201, 139, 91, 0.14);
+    --theme-gold-badge-text: #dfb089;
+    --theme-gold-badge-border: rgba(201, 139, 91, 0.32);
+    --theme-text-title: #f5eef0;
+    --theme-text-body: #e2d1d5;
+    --theme-text-muted: #b0919a;
+    --theme-shadow-glow: rgba(184, 101, 102, 0.16);
+    --theme-ambient-glow-1: rgba(184, 101, 102, 0.12);
+    --theme-ambient-glow-2: rgba(201, 139, 91, 0.09);
+  }
+
+  [data-theme="emerald"] {
+    /* Theme 3: Botanical Pine (Deep Pine Slate, Calm Sage Jade, Muted Brass) */
+    --theme-bg-gradient: radial-gradient(circle at 18% 12%, #10251f 0%, #091713 48%, #050d0b 100%);
+    --theme-card-bg: rgba(13, 31, 26, 0.86);
+    --theme-card-bg-subtle: rgba(9, 22, 18, 0.80);
+    --theme-card-hover: rgba(19, 44, 37, 0.94);
+    --theme-card-border: rgba(58, 99, 84, 0.45);
+    --theme-card-border-glow: rgba(44, 140, 111, 0.50);
+    --theme-header-bg: rgba(8, 20, 16, 0.92);
+    --theme-nav-bg: rgba(6, 15, 12, 0.95);
+    --theme-input-bg: rgba(10, 24, 20, 0.88);
+    --theme-input-border: rgba(58, 99, 84, 0.55);
+    --theme-accent-primary: #2c8c6f;
+    --theme-accent-primary-gradient: linear-gradient(135deg, #2c8c6f 0%, #1f6f57 100%);
+    --theme-accent-primary-text: #f0fdf8;
+    --theme-accent-secondary: #b59a4b;
+    --theme-accent-secondary-gradient: linear-gradient(135deg, #b59a4b 0%, #8f7735 100%);
+    --theme-accent-badge-bg: rgba(44, 140, 111, 0.14);
+    --theme-accent-badge-text: #7cc4ac;
+    --theme-accent-badge-border: rgba(44, 140, 111, 0.32);
+    --theme-gold-badge-bg: rgba(181, 154, 75, 0.14);
+    --theme-gold-badge-text: #d4bf7e;
+    --theme-gold-badge-border: rgba(181, 154, 75, 0.32);
+    --theme-text-title: #eef5f2;
+    --theme-text-body: #d3e4dc;
+    --theme-text-muted: #8fb3a3;
+    --theme-shadow-glow: rgba(44, 140, 111, 0.16);
+    --theme-ambient-glow-1: rgba(44, 140, 111, 0.12);
+    --theme-ambient-glow-2: rgba(181, 154, 75, 0.08);
+  }
+
+  [data-theme="daylight"] {
+    /* Theme 4: Warm Stone Daylight (Soft Linen Canvas, Heritage Bronze, Slate Teal) */
+    --theme-bg-gradient: radial-gradient(circle at 15% 12%, #f7f6f2 0%, #efeeea 55%, #e5e4df 100%);
+    --theme-card-bg: rgba(255, 255, 255, 0.94);
+    --theme-card-bg-subtle: rgba(247, 246, 242, 0.92);
+    --theme-card-hover: rgba(255, 255, 255, 1);
+    --theme-card-border: rgba(185, 189, 196, 0.80);
+    --theme-card-border-glow: rgba(140, 90, 43, 0.45);
+    --theme-header-bg: rgba(252, 251, 249, 0.96);
+    --theme-nav-bg: rgba(252, 251, 249, 0.98);
+    --theme-input-bg: rgba(248, 247, 244, 0.96);
+    --theme-input-border: rgba(185, 189, 196, 0.9);
+    --theme-accent-primary: #8c5a2b;
+    --theme-accent-primary-gradient: linear-gradient(135deg, #8c5a2b 0%, #6e451f 100%);
+    --theme-accent-primary-text: #ffffff;
+    --theme-accent-secondary: #1f7a74;
+    --theme-accent-secondary-gradient: linear-gradient(135deg, #1f7a74 0%, #155c57 100%);
+    --theme-accent-badge-bg: rgba(31, 122, 116, 0.10);
+    --theme-accent-badge-text: #155c57;
+    --theme-accent-badge-border: rgba(31, 122, 116, 0.25);
+    --theme-gold-badge-bg: rgba(140, 90, 43, 0.10);
+    --theme-gold-badge-text: #6e451f;
+    --theme-gold-badge-border: rgba(140, 90, 43, 0.25);
+    --theme-text-title: #1e293b;
+    --theme-text-body: #334155;
+    --theme-text-muted: #64748b;
+    --theme-shadow-glow: rgba(140, 90, 43, 0.14);
+    --theme-ambient-glow-1: rgba(31, 122, 116, 0.08);
+    --theme-ambient-glow-2: rgba(140, 90, 43, 0.06);
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    overflow: clip;
+  }
+
+  body {
+    font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    background: var(--theme-bg-gradient);
+    color: var(--theme-text-body);
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Reusable Theme Component Classes */
+@layer components {
+  /* Unified Glassmorphism Card System */
+  .theme-card {
+    background-color: var(--theme-card-bg);
+    border: 1px solid var(--theme-card-border);
+    color: var(--theme-text-body);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .theme-card-interactive {
+    background-color: var(--theme-card-bg);
+    border: 1px solid var(--theme-card-border);
+    color: var(--theme-text-body);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .theme-card-interactive:hover {
+    background-color: var(--theme-card-hover);
+    border-color: var(--theme-card-border-glow);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.28), 0 0 14px -2px var(--theme-shadow-glow);
+  }
+
+  .theme-card-subtle {
+    background-color: var(--theme-card-bg-subtle);
+    border: 1px solid var(--theme-card-border);
+    color: var(--theme-text-body);
+  }
+
+  /* Primary Accent Button */
+  .theme-btn-primary {
+    background: var(--theme-accent-primary-gradient);
+    color: var(--theme-accent-primary-text);
+    font-weight: 700;
+    border-radius: 0.75rem;
+    box-shadow: 0 3px 12px 0 var(--theme-shadow-glow);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .theme-btn-primary:hover {
+    filter: brightness(1.06);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 16px 0 var(--theme-shadow-glow);
+  }
+
+  .theme-btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  /* Calm Teal Secondary Accent Button */
+  .theme-btn-teal {
+    background: var(--theme-accent-secondary-gradient);
+    color: #ffffff;
+    font-weight: 700;
+    border-radius: 0.75rem;
+    box-shadow: 0 3px 12px 0 var(--theme-shadow-glow);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .theme-btn-teal:hover {
+    filter: brightness(1.06);
+    transform: translateY(-1px);
+  }
+
+  /* Secondary Outline Button */
+  .theme-btn-secondary {
+    background-color: var(--theme-card-bg-subtle);
+    border: 1px solid var(--theme-card-border);
+    color: var(--theme-text-body);
+    font-weight: 600;
+    border-radius: 0.75rem;
+    transition: all 0.2s ease;
+  }
+
+  .theme-btn-secondary:hover {
+    background-color: var(--theme-card-hover);
+    border-color: var(--theme-card-border-glow);
+    color: var(--theme-text-title);
+  }
+
+  /* Badges & Tags */
+  .theme-badge-teal {
+    background-color: var(--theme-accent-badge-bg);
+    color: var(--theme-accent-badge-text);
+    border: 1px solid var(--theme-accent-badge-border);
+  }
+
+  .theme-badge-gold {
+    background-color: var(--theme-gold-badge-bg);
+    color: var(--theme-gold-badge-text);
+    border: 1px solid var(--theme-gold-badge-border);
+  }
+
+  /* Inputs & Selects */
+  .theme-input {
+    background-color: var(--theme-input-bg);
+    border: 1px solid var(--theme-input-border);
+    color: var(--theme-text-title);
+    border-radius: 0.75rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .theme-input:focus {
+    outline: none;
+    border-color: var(--theme-accent-secondary);
+    box-shadow: 0 0 0 2px var(--theme-shadow-glow);
+  }
+
+  .theme-input::placeholder {
+    color: var(--theme-text-muted);
+    opacity: 0.7;
+  }
+}
+
+/* Atmospheric Ambient Lighting Blooms */
+.theme-ambient-glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(110px);
+  opacity: 0.75;
+  z-index: 0;
+  transition: background-color 0.5s ease;
+}
+
+/* Custom Eye-Soothing Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--theme-accent-secondary);
+  opacity: 0.5;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-accent-primary);
+}
+
+#charaiva-app-root [data-fullscreen-shell="true"] :is(
+  #btn-chat-back-home,
+  #btn-camera-back-home,
+  #btn-city-back-home,
+  #btn-deep-conversation-back,
+  #btn-discover-back,
+  #btn-explanation-back,
+  #btn-settings-back-home,
+  #btn-history-back-home,
+  #btn-map-back-home,
+  #btn-nearby-back-home
+) {
+  display: none !important;
+}
+

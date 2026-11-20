@@ -1,0 +1,12 @@
+{
+  "name": "CharaivaNew",
+  "description": "AI-powered multilingual smart tour guide with camera vision, GPS landmark detection, TTS narration, and interactive Q\u0026A.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
